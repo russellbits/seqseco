@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Single Keystroke Inputs Form</title>
+		<style>
+			body {
+				color: white;
+				background-color: black;
+				display: flex;
+				height: 100vh;
+			}
+			#app {
+				margin: auto;
+			}
+			.form-row {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+				text-align: center;
+			}
+			.form-row input {
+				width: 40px;
+				height: 80px;
+				margin: 10px;
+			}
+			input[type='number'] {
+				font:
+					50px 'Din Alternate',
+					monospace;
+				border: 1px solid silver;
+				border-radius: 5px;
+				text-align: center;
+			}
+			input[type='number'].no-arrows::-webkit-inner-spin-button,
+			input[type='number']::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+			#output {
+				color: white;
+				font:
+					50px 'Din Alternate',
+					monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<form action="#" method="POST">
+				<div class="form-row">
+					<input
+						type="number"
+						name="hours10"
+						id="hours10"
+						min="0"
+						max="9"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="hours1"
+						id="hours1"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					&nbsp;:&nbsp;
+					<input
+						type="number"
+						name="minutes10"
+						id="minutes10"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="minutes1"
+						id="minutes1"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					&nbsp;:&nbsp;
+					<input
+						type="number"
+						name="seconds10"
+						id="seconds10"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="seconds1"
+						id="seconds1"
+						maxlength="1"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+				</div>
+				<button type="button" onclick="makeString()">Make String</button>
+			</form>
+			<div id="output">
+				<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+			</div>
+		</div>
+		<script>
+			function isNumberKey(evt) {
+				var charCode = evt.which ? evt.which : evt.keyCode;
+				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+				return true;
+			}
+
+			var inputs = document.querySelectorAll('input[type="number"]');
+
+			inputs.forEach(function (input, index) {
+				input.addEventListener('input', function () {
+					// If input value length is equal to maxlength
+					console.log('Typed in ' + index);
+					if (input.value.length === parseInt(input.getAttribute('maxlength'))) {
+						// Focus on the next input if it exists
+						if (index < inputs.length - 1) {
+							inputs[index + 1].focus();
+						}
+					}
+				});
+			});
+
+			function makeString() {
+				var hours10 = document.getElementById('hours10').value;
+				var hours1 = document.getElementById('hours1').value;
+				var minutes10 = document.getElementById('minutes10').value;
+				var minutes1 = document.getElementById('minutes1').value;
+				var seconds10 = document.getElementById('seconds10').value;
+				var seconds1 = document.getElementById('seconds1').value;
+
+				var hours = hours10 + hours1;
+				var minutes = minutes10 + minutes1;
+				var seconds = seconds10 + seconds1;
+
+				document.getElementById('hours').innerText = hours;
+				document.getElementById('minutes').innerText = minutes;
+				document.getElementById('seconds').innerText = seconds;
+				var resultString = hours + ':' + minutes + ':' + seconds;
+				console.log(resultString); // or do something else with the result string
+			}
+		</script>
+	</body>
+</html>
