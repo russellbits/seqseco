@@ -55,8 +55,7 @@
 						name="hours10"
 						id="hours10"
 						min="0"
-						max="9"
-						maxlength="1"
+						max="6"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
@@ -64,7 +63,8 @@
 						type="number"
 						name="hours1"
 						id="hours1"
-						maxlength="1"
+						min="0"
+						max="9"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
@@ -73,7 +73,8 @@
 						type="number"
 						name="minutes10"
 						id="minutes10"
-						maxlength="1"
+						min="0"
+						max="6"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
@@ -81,7 +82,8 @@
 						type="number"
 						name="minutes1"
 						id="minutes1"
-						maxlength="1"
+						min="0"
+						max="9"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
@@ -90,7 +92,8 @@
 						type="number"
 						name="seconds10"
 						id="seconds10"
-						maxlength="1"
+						min="0"
+						max="6"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
@@ -98,12 +101,13 @@
 						type="number"
 						name="seconds1"
 						id="seconds1"
-						maxlength="1"
+						min="0"
+						max="9"
 						class="no-arrows"
 						onkeypress="return isNumberKey(event)"
 					/>
 				</div>
-				<button type="button" onclick="makeString()">Make String</button>
+				<button type="button" onclick="makeTimer()">Make String</button>
 			</form>
 			<div id="output">
 				<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
@@ -122,33 +126,98 @@
 				input.addEventListener('input', function () {
 					// If input value length is equal to maxlength
 					console.log('Typed in ' + index);
-					if (input.value.length === parseInt(input.getAttribute('maxlength'))) {
+
+					if (input.value.length === 1) {
 						// Focus on the next input if it exists
 						if (index < inputs.length - 1) {
 							inputs[index + 1].focus();
+						} else {
+							// else remove all focus
+							console.log('Removing all focus.');
+							document.activeElement = null; // TODO: this doesn't work; maybe move focus to the submit button?
 						}
 					}
 				});
 			});
 
-			function makeString() {
-				var hours10 = document.getElementById('hours10').value;
-				var hours1 = document.getElementById('hours1').value;
-				var minutes10 = document.getElementById('minutes10').value;
-				var minutes1 = document.getElementById('minutes1').value;
-				var seconds10 = document.getElementById('seconds10').value;
-				var seconds1 = document.getElementById('seconds1').value;
+			function makeTimer() {
+				let hours10 = document.getElementById('hours10').value;
+				let hours1 = document.getElementById('hours1').value;
+				let minutes10 = document.getElementById('minutes10').value;
+				let minutes1 = document.getElementById('minutes1').value;
+				let seconds10 = document.getElementById('seconds10').value;
+				let seconds1 = document.getElementById('seconds1').value;
+				let timer = [hours10, hours1, minutes10, minutes1, seconds10, seconds1];
 
-				var hours = hours10 + hours1;
-				var minutes = minutes10 + minutes1;
-				var seconds = seconds10 + seconds1;
+				if (hours10 === '') {
+					hours10 = 0;
+				}
 
-				document.getElementById('hours').innerText = hours;
-				document.getElementById('minutes').innerText = minutes;
-				document.getElementById('seconds').innerText = seconds;
-				var resultString = hours + ':' + minutes + ':' + seconds;
+				// let hours = hours10 + hours1;
+				// let minutes = minutes10 + minutes1;
+				// let seconds = seconds10 + seconds1;
+
+				document.getElementById('hours').innerText = toString(timer[0]) + toString(timer[1]);
+				document.getElementById('minutes').innerText = toString(timer[2]) + toString(timer[3]);
+				document.getElementById('seconds').innerText = toString(timer[4]) + toString(timer[5]);
+				var resultString = toString(timer[0]) + toString(timer[1]);
+				+':' +
+					toString(timer[2]) +
+					toString(timer[3]) +
+					':' +
+					toString(timer[4]) +
+					toString(timer[5]);
 				console.log(resultString); // or do something else with the result string
+				countdown(timer);
 			}
+
+			function countdown(timerArray) {
+				var interval = setInterval(function () {
+					// Decrement the last element of the array (seconds)
+					timerArray[5]--;
+
+					// If seconds reach 0, decrement the next element (tens of seconds)
+					if (timerArray[5] < 0) {
+						timerArray[5] = 9;
+						timerArray[4]--;
+					}
+
+					// If tens of seconds reach -1, decrement the next element (minutes)
+					if (timerArray[4] < 0) {
+						timerArray[4] = 5;
+						timerArray[3]--;
+					}
+
+					// If minutes reach -1, decrement the next element (tens of minutes)
+					if (timerArray[3] < 0) {
+						timerArray[3] = 9;
+						timerArray[2]--;
+					}
+
+					// If tens of minutes reach -1, decrement the next element (hours)
+					if (timerArray[2] < 0) {
+						timerArray[2] = 5;
+						timerArray[1]--;
+					}
+
+					// If hours reach -1, decrement the next element (tens of hours)
+					if (timerArray[1] < 0) {
+						timerArray[1] = 9;
+						timerArray[0]--;
+					}
+
+					// If all elements become 0, stop the countdown
+					if (timerArray.every((value) => value === 0)) {
+						clearInterval(interval);
+					}
+
+					console.log(timerArray); // Output the current time array
+				}, 100); // Interval of tenths of a second (100 milliseconds)
+			}
+
+			// Example usage
+			// var initialTime = [0, 5, 3, 0, 1, 0];
+			// countdown(initialTime);
 		</script>
 	</body>
 </html>
