@@ -48,6 +48,7 @@
 	</head>
 	<body>
 		<div id="app">
+			<div id="output"></div>
 			<form action="#" method="POST">
 				<div class="form-row">
 					<input
@@ -111,9 +112,6 @@
 				<button type="button" onclick="startTimer()">Start Timer</button>
 				<button type="button" onclick="stopTimer()">Stop Timer</button>
 			</form>
-			<div id="output">
-				<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
-			</div>
 		</div>
 
 		<script>
@@ -147,6 +145,28 @@
 				timerInputs.forEach(function (input, index) {
 					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
 				})
+				// Create the span elements
+				var hoursSpan = document.createElement('span')
+				hoursSpan.setAttribute('id', 'hours')
+				hoursSpan.textContent = `${timerArray[0]}${timerArray[1]}`
+
+				var minutesSpan = document.createElement('span')
+				minutesSpan.setAttribute('id', 'minutes')
+				minutesSpan.textContent = `${timerArray[2]}${timerArray[3]}`
+
+				var secondsSpan = document.createElement('span')
+				secondsSpan.setAttribute('id', 'seconds')
+				secondsSpan.textContent = `${timerArray[4]}${timerArray[5]}`
+
+				// Get the parent element to which the spans will be appended
+				var parentElement = document.getElementById('output')
+
+				// Append the span elements to the parent element
+				parentElement.appendChild(hoursSpan)
+				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
+				parentElement.appendChild(minutesSpan)
+				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
+				parentElement.appendChild(secondsSpan)
 			}
 
 			function startTimer() {
