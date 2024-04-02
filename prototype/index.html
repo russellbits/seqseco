@@ -117,97 +117,94 @@
 		</div>
 
 		<script>
-			let timer;
-			let timerArray = [0, 0, 0, 0, 0, 0];
-			const timerInputs = document.querySelectorAll('input[type="number"]');
+			let timer
+			let timerArray = [0, 0, 0, 0, 0, 0]
+			const timerInputs = document.querySelectorAll('input[type="number"]')
 
 			function isNumberKey(evt) {
-				var charCode = evt.which ? evt.which : evt.keyCode;
-				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
-				return true;
+				var charCode = evt.which ? evt.which : evt.keyCode
+				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
+				return true
 			}
 
 			timerInputs.forEach(function (input, index) {
 				input.addEventListener('input', function () {
-					// If input value length is equal to maxlength
-					console.log('Typed in ' + index);
-
 					if (input.value.length === 1) {
 						// Focus on the next input if it exists
 						if (index < timerInputs.length - 1) {
-							timerInputs[index + 1].focus();
+							timerInputs[index + 1].focus()
 						} else {
 							// else remove all focus
-							console.log('Removing all focus.');
-							document.activeElement = null; // TODO: this doesn't work; maybe move focus to the submit button?
+							console.log('Removing all focus.')
+							document.activeElement = null // TODO: this doesn't work; maybe move focus to the submit button?
 						}
 					}
-				});
-			});
+				})
+			})
 
 			function generateTimer() {
 				timerInputs.forEach(function (input, index) {
-					timerArray[index] = input.value === '' ? 0 : parseInt(input.value);
-				});
-
-				// console.log(timerArray);
+					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
+				})
 			}
 
 			function startTimer() {
 				timer = setInterval(function () {
 					// Decrement the last element of the array (seconds)
-					timerArray[5]--;
+					timerArray[5]--
 
 					// If seconds reach 0, decrement the next element (tens of seconds)
 					if (timerArray[5] < 0) {
-						timerArray[5] = 9;
-						timerArray[4]--;
+						timerArray[5] = 9
+						timerArray[4]--
 					}
 
 					// If tens of seconds reach -1, decrement the next element (minutes)
 					if (timerArray[4] < 0) {
-						timerArray[4] = 5;
-						timerArray[3]--;
+						timerArray[4] = 5
+						timerArray[3]--
 					}
 
 					// If minutes reach -1, decrement the next element (tens of minutes)
 					if (timerArray[3] < 0) {
-						timerArray[3] = 9;
-						timerArray[2]--;
+						timerArray[3] = 9
+						timerArray[2]--
 					}
 
 					// If tens of minutes reach -1, decrement the next element (hours)
 					if (timerArray[2] < 0) {
-						timerArray[2] = 5;
-						timerArray[1]--;
+						timerArray[2] = 5
+						timerArray[1]--
 					}
 
 					// If hours reach -1, decrement the next element (tens of hours)
 					if (timerArray[1] < 0) {
-						timerArray[1] = 9;
-						timerArray[0]--;
+						timerArray[1] = 9
+						timerArray[0]--
 					}
 
 					// If all elements become 0, stop the countdown
 					if (timerArray.every((value) => value === 0)) {
-						clearInterval(timer);
+						clearInterval(timer)
 					}
 
-					var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`;
+					displayTimer(timerArray)
+				}, 100) // Interval of tenths of a second (100 milliseconds)
+			}
 
-					document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`;
-					document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`;
-					document.getElementById('seconds').innerText = `${timerArray[4]}${timerArray[5]}`;
+			function displayTimer(timerArray) {
+				// debugging
+				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
+				console.log(resultString) // or do something else with the result string
 
-					console.log(resultString); // or do something else with the result string
-
-					// console.log(timerArray); // Output the current time array
-				}, 100); // Interval of tenths of a second (100 milliseconds)
+				document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`
+				document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`
+				document.getElementById('seconds').innerText = `${timerArray[4]}${timerArray[5]}`
 			}
 
 			// Function to stop the interval
 			function stopTimer() {
-				clearInterval(timer);
+				clearInterval(timer)
 			}
 		</script>
 	</body>
