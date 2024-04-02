@@ -120,17 +120,17 @@
 				return true;
 			}
 
-			var inputs = document.querySelectorAll('input[type="number"]');
+			const timerInputs = document.querySelectorAll('input[type="number"]');
 
-			inputs.forEach(function (input, index) {
+			timerInputs.forEach(function (input, index) {
 				input.addEventListener('input', function () {
 					// If input value length is equal to maxlength
 					console.log('Typed in ' + index);
 
 					if (input.value.length === 1) {
 						// Focus on the next input if it exists
-						if (index < inputs.length - 1) {
-							inputs[index + 1].focus();
+						if (index < timerInputs.length - 1) {
+							timerInputs[index + 1].focus();
 						} else {
 							// else remove all focus
 							console.log('Removing all focus.');
@@ -141,32 +141,41 @@
 			});
 
 			function makeTimer() {
-				let hours10 = parseInt(document.getElementById('hours10').value);
-				let hours1 = parseInt(document.getElementById('hours1').value);
-				let minutes10 = parseInt(document.getElementById('minutes10').value);
-				let minutes1 = parseInt(document.getElementById('minutes1').value);
-				let seconds10 = parseInt(document.getElementById('seconds10').value);
-				let seconds1 = parseInt(document.getElementById('seconds1').value);
-				let timer = [hours10, hours1, minutes10, minutes1, seconds10, seconds1];
+				const timerInputs = document.querySelectorAll('input[type="number"]');
+				let timer = [0, 0, 0, 0, 0, 0];
 
-				if (hours10 === '') {
-					hours10 = 0;
-				}
+				timerInputs.forEach(function (input, index) {
+					timer[index] = parseInt(input.value);
+				});
+
+				console.log(timer);
+
+				// let hours10 = parseInt(document.getElementById('hours10').value);
+				// let hours1 = parseInt(document.getElementById('hours1').value);
+				// let minutes10 = parseInt(document.getElementById('minutes10').value);
+				// let minutes1 = parseInt(document.getElementById('minutes1').value);
+				// let seconds10 = parseInt(document.getElementById('seconds10').value);
+				// let seconds1 = parseInt(document.getElementById('seconds1').value);
+				// let timer = [hours10, hours1, minutes10, minutes1, seconds10, seconds1];
+
+				// if (hours10 === '') {
+				// 	hours10 = 0;
+				// }
 
 				// let hours = hours10 + hours1;
 				// let minutes = minutes10 + minutes1;
 				// let seconds = seconds10 + seconds1;
 
-				alert(`${timer[0]}${timer[1]}`);
+				// alert(`${timer[0]}${timer[1]}`);
 
 				// document.getElementById('hours').innerText = toString(timer[0]) + toString(timer[1]);
-				document.getElementById('hours').innerText = `${timer[0]}${timer[1]}`;
-				document.getElementById('minutes').innerText = `${timer[2]}${timer[3]}`;
-				document.getElementById('seconds').innerText = `${timer[4]}${timer[5]}`;
-				var resultString = `${timer[0]}${timer[1]}:${timer[2]}${timer[3]}:${timer[4]}${timer[5]}`;
+				// document.getElementById('hours').innerText = `${timer[0]}${timer[1]}`;
+				// document.getElementById('minutes').innerText = `${timer[2]}${timer[3]}`;
+				// document.getElementById('seconds').innerText = `${timer[4]}${timer[5]}`;
+				// var resultString = `${timer[0]}${timer[1]}:${timer[2]}${timer[3]}:${timer[4]}${timer[5]}`;
 
-				console.log(resultString); // or do something else with the result string
-				countdown(timer);
+				// console.log(resultString); // or do something else with the result string
+				// countdown(timer);
 			}
 
 			function countdown(timerArray) {
