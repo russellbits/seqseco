@@ -145,18 +145,10 @@
 				let timer = [0, 0, 0, 0, 0, 0];
 
 				timerInputs.forEach(function (input, index) {
-					timer[index] = parseInt(input.value);
+					timer[index] = input.value === '' ? 0 : parseInt(input.value);
 				});
 
 				console.log(timer);
-
-				// let hours10 = parseInt(document.getElementById('hours10').value);
-				// let hours1 = parseInt(document.getElementById('hours1').value);
-				// let minutes10 = parseInt(document.getElementById('minutes10').value);
-				// let minutes1 = parseInt(document.getElementById('minutes1').value);
-				// let seconds10 = parseInt(document.getElementById('seconds10').value);
-				// let seconds1 = parseInt(document.getElementById('seconds1').value);
-				// let timer = [hours10, hours1, minutes10, minutes1, seconds10, seconds1];
 
 				// if (hours10 === '') {
 				// 	hours10 = 0;
