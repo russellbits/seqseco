@@ -107,7 +107,7 @@
 						onkeypress="return isNumberKey(event)"
 					/>
 				</div>
-				<button type="button" onclick="makeTimer()">Make String</button>
+				<button type="button" onclick="makeTimer()">Make & Start Timer</button>
 			</form>
 			<div id="output">
 				<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
@@ -141,12 +141,12 @@
 			});
 
 			function makeTimer() {
-				let hours10 = document.getElementById('hours10').value;
-				let hours1 = document.getElementById('hours1').value;
-				let minutes10 = document.getElementById('minutes10').value;
-				let minutes1 = document.getElementById('minutes1').value;
-				let seconds10 = document.getElementById('seconds10').value;
-				let seconds1 = document.getElementById('seconds1').value;
+				let hours10 = parseInt(document.getElementById('hours10').value);
+				let hours1 = parseInt(document.getElementById('hours1').value);
+				let minutes10 = parseInt(document.getElementById('minutes10').value);
+				let minutes1 = parseInt(document.getElementById('minutes1').value);
+				let seconds10 = parseInt(document.getElementById('seconds10').value);
+				let seconds1 = parseInt(document.getElementById('seconds1').value);
 				let timer = [hours10, hours1, minutes10, minutes1, seconds10, seconds1];
 
 				if (hours10 === '') {
@@ -157,16 +157,14 @@
 				// let minutes = minutes10 + minutes1;
 				// let seconds = seconds10 + seconds1;
 
-				document.getElementById('hours').innerText = toString(timer[0]) + toString(timer[1]);
-				document.getElementById('minutes').innerText = toString(timer[2]) + toString(timer[3]);
-				document.getElementById('seconds').innerText = toString(timer[4]) + toString(timer[5]);
-				var resultString = toString(timer[0]) + toString(timer[1]);
-				+':' +
-					toString(timer[2]) +
-					toString(timer[3]) +
-					':' +
-					toString(timer[4]) +
-					toString(timer[5]);
+				alert(`${timer[0]}${timer[1]}`);
+
+				// document.getElementById('hours').innerText = toString(timer[0]) + toString(timer[1]);
+				document.getElementById('hours').innerText = `${timer[0]}${timer[1]}`;
+				document.getElementById('minutes').innerText = `${timer[2]}${timer[3]}`;
+				document.getElementById('seconds').innerText = `${timer[4]}${timer[5]}`;
+				var resultString = `${timer[0]}${timer[1]}:${timer[2]}${timer[3]}:${timer[4]}${timer[5]}`;
+
 				console.log(resultString); // or do something else with the result string
 				countdown(timer);
 			}
