@@ -121,12 +121,6 @@
 			let timerArray = [0, 0, 0, 0, 0, 0]
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 
-			function isNumberKey(evt) {
-				var charCode = evt.which ? evt.which : evt.keyCode
-				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
-				return true
-			}
-
 			timerInputs.forEach(function (input, index) {
 				input.addEventListener('input', function () {
 					if (input.value.length === 1) {
@@ -134,13 +128,20 @@
 						if (index < timerInputs.length - 1) {
 							timerInputs[index + 1].focus()
 						} else {
-							// else remove all focus
-							console.log('Removing all focus.')
-							document.activeElement = null // TODO: this doesn't work; maybe move focus to the submit button?
+							// Remove focus from all form elements
+							timerInputs.forEach(function (input) {
+								input.blur()
+							})
 						}
 					}
 				})
 			})
+
+			function isNumberKey(evt) {
+				var charCode = evt.which ? evt.which : evt.keyCode
+				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
+				return true
+			}
 
 			function generateTimer() {
 				timerInputs.forEach(function (input, index) {
