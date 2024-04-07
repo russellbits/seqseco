@@ -115,7 +115,13 @@
 		</div>
 
 		<script>
-			let timer
+			/*
+			 * TODOs & Questions
+			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
+			 * Setting needed: Insert pause between timers Y/N
+			 *
+			 */
+			let timers = []
 			let timerArray = [0, 0, 0, 0, 0, 0]
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 
@@ -170,7 +176,7 @@
 			}
 
 			function startTimer() {
-				timer = setInterval(function () {
+				timers[0] = setInterval(function () {
 					// Decrement the last element of the array (seconds)
 					timerArray[5]--
 
@@ -216,7 +222,7 @@
 			function displayTimer(timerArray) {
 				// debugging
 				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
-				console.log(resultString) // or do something else with the result string
+				// console.log(resultString) // or do something else with the result string
 
 				document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`
 				document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`
@@ -225,8 +231,33 @@
 
 			// Function to stop the interval
 			function stopTimer() {
-				clearInterval(timer)
+				clearInterval(timers[0])
 			}
+			/*
+			{
+			  "timers": {
+  				"Sit-Ups": [
+					0,
+					0,
+					0,
+					3,
+					3,
+					0
+				],
+				"Push-Ups": [
+					0,
+					0,
+					0,
+					2,
+					0,
+					0
+  				]},
+  				"settings": {
+    				"nightmode": true,
+    				"interpause": false
+  				},
+  				"string": "Hello World"
+			music}*/
 		</script>
 	</body>
 </html>
