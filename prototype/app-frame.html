@@ -11,28 +11,28 @@
 		<title>Generic Web App Template</title>
 		<style>
 			@font-face {
-				font-family: 'montserrat-medium';
+				font-family: 'Montserrat Medium';
 				src:
-					url('montserrat-medium.woff2') format('woff2'),
-					url('montserrat-medium.woff') format('woff');
+					url('fonts/montserrat-medium.woff2') format('woff2'),
+					url('fonts/montserrat-medium.woff') format('woff');
 				font-weight: normal;
 				font-style: normal;
 			}
 
 			@font-face {
-				font-family: 'montserrat';
+				font-family: 'Montserrat';
 				src:
-					url('montserrat.woff2') format('woff2'),
-					url('montserrat.woff') format('woff');
+					url('fonts/montserrat.woff2') format('woff2'),
+					url('fonts/montserrat.woff') format('woff');
 				font-weight: normal;
 				font-style: normal;
 			}
 
 			@font-face {
-				font-family: 'montserrat-light';
+				font-family: 'Montserrat Light';
 				src:
-					url('montserrat-light.woff2') format('woff2'),
-					url('montserrat-light.woff') format('woff');
+					url('fonts/montserrat-light.woff2') format('woff2'),
+					url('fonts/montserrat-light.woff') format('woff');
 				font-weight: normal;
 				font-style: normal;
 			}
@@ -61,6 +61,12 @@
 			#menu > div {
 				border: 1px solid green;
 			}
+			span.logo {
+				font-family: 'Montserrat Medium';
+				font-size: 18px;
+				color: white;
+				text-transform: uppercase;
+			}
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
 				/* CSS rules for screens between 400px and 900px */
@@ -74,7 +80,7 @@
 		<div id="app">
 			<div id="menu">
 				<div>
-					<span>Seqminaut</span>
+					<span class="logo">Seqminaut</span>
 				</div>
 				<div>
 					<span class="icon info"></span>
