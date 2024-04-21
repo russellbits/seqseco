@@ -58,14 +58,39 @@
 				height: 42px;
 				background-color: rgba(131, 0, 198, 0.7);
 			}
-			#menu > div {
+			#menu > div.left {
+				flex: 1;
 				border: 1px solid green;
+				padding: 10px;
 			}
 			span.logo {
 				font-family: 'Montserrat Medium';
 				font-size: 18px;
 				color: white;
 				text-transform: uppercase;
+			}
+			#menu > div.right {
+				flex: 1;
+				background-color: lightgreen;
+				padding: 10px;
+				display: flex;
+				justify-content: space-between;
+			}
+			#menu > div.right > i {
+				flex: 1;
+				width: 25px;
+				height: 25px;
+				margin: 0 5px;
+			}
+			.icon {
+				color: white;
+				border: 1px solid lightblue;
+			}
+			.icon.info {
+				background-image: url('images/icon-information.svg');
+			}
+			.icon.settings {
+				background-image: url('images/icon-settings.svg');
 			}
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
@@ -79,14 +104,14 @@
 	<body>
 		<div id="app">
 			<div id="menu">
-				<div>
+				<div class="left">
 					<span class="logo">Seqminaut</span>
 				</div>
-				<div>
-					<span class="icon info"></span>
-					<span class="icon settings"></span>
-					<span class="icon github"></span>
-					<span class="icon linkedin"></span>
+				<div class="right">
+					<i class="icon info"></i>
+					<i class="icon settings"></i>
+					<i class="icon github"></i>
+					<i class="icon linkedin"></i>
 				</div>
 			</div>
 		</div>
