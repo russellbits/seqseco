@@ -100,6 +100,10 @@
 			.icon.linkedin {
 				background-image: url('images/icon-linkedin.svg');
 			}
+			::backdrop {
+				background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
+				opacity: 0.75;
+			}
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
 				/* CSS rules for screens between 400px and 900px */
@@ -108,6 +112,9 @@
 				}
 			}
 		</style>
+		<script>
+			const dialog = document.querySelector('dialog')
+		</script>
 	</head>
 	<body>
 		<div id="app" class="nightmode">
@@ -122,6 +129,13 @@
 					<a class="icon linkedin" href="https://linkedin.com/in/russellbits"></a>
 				</div>
 			</div>
+
+			<button onclick="window.dialog.show();">open dialog</button>
+
+			<dialog id="dialog">
+				I'm a dialog.
+				<button onclick="window.dialog.close();">close</button>
+			</dialog>
 		</div>
 
 		<script>
