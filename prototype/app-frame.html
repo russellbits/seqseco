@@ -1,3 +1,8 @@
+<!--
+    TODOs:
+    1. Create font package for brand
+    2. Create CSS sprites for menu items
+-->
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,6 +10,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Generic Web App Template</title>
 		<style>
+			@font-face {
+				font-family: 'montserrat-medium';
+				src:
+					url('montserrat-medium.woff2') format('woff2'),
+					url('montserrat-medium.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'montserrat';
+				src:
+					url('montserrat.woff2') format('woff2'),
+					url('montserrat.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'montserrat-light';
+				src:
+					url('montserrat-light.woff2') format('woff2'),
+					url('montserrat-light.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
 			body {
 				color: white;
 				background-color: black;
@@ -19,6 +50,17 @@
 				height: 736px;
 				background-color: white;
 			}
+			#menu {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				width: 100%;
+				height: 42px;
+				background-color: rgba(131, 0, 198, 0.7);
+			}
+			#menu > div {
+				border: 1px solid green;
+			}
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
 				/* CSS rules for screens between 400px and 900px */
@@ -29,6 +71,18 @@
 		</style>
 	</head>
 	<body>
-		<div id="app"></div>
+		<div id="app">
+			<div id="menu">
+				<div>
+					<span>Seqminaut</span>
+				</div>
+				<div>
+					<span class="icon info"></span>
+					<span class="icon settings"></span>
+					<span class="icon github"></span>
+					<span class="icon linkedin"></span>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
