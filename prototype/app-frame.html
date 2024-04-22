@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="./favicon.icn" />
 		<title>Generic Web App Template</title>
 		<style>
 			@font-face {
@@ -44,6 +45,7 @@
 				padding: 0;
 				margin: 0;
 			}
+
 			#app {
 				margin: auto;
 				width: 414px;
@@ -53,6 +55,7 @@
 			#app.nightmode {
 				background-color: rgb(89, 89, 89);
 			}
+
 			#menu {
 				display: flex;
 				flex-direction: row;
@@ -61,61 +64,93 @@
 				height: 42px;
 				background-color: rgba(131, 0, 198, 0.4);
 			}
+
 			#menu > div.left {
 				flex: 1;
 				padding: 10px;
 			}
+
 			span.logo {
 				font-family: 'Montserrat Medium';
 				font-size: 18px;
 				color: white;
 				text-transform: uppercase;
 			}
+
 			#menu > div.right {
 				flex: 1;
 				padding: 10px;
 				display: flex;
 				justify-content: space-between;
 			}
+
 			/*#menu > div.right > div {
 				flex: 1;
 				padding: 0;
 				margin: 0 5px;
 			}*/
+
+			main {
+				display: flex;
+				height: 80%;
+				padding: 0;
+				margin: 0;
+			}
+
+			.splashscreen {
+				flex: 1;
+				width: 334px;
+				height: 107px;
+				margin: auto;
+			}
+
+			.splashscreen img {
+				text-align: center;
+				margin: auto;
+			}
+
 			.icon {
 				color: white;
 				width: 22px;
 				height: 22px;
 				background-size: cover;
 			}
+
 			.icon.info {
 				background-image: url('images/icon-information.svg');
 			}
+
 			.icon.settings {
 				background-image: url('images/icon-settings.svg');
 			}
+
 			.icon.github {
 				background-image: url('images/icon-github.svg');
 			}
+
 			.icon.linkedin {
 				background-image: url('images/icon-linkedin.svg');
 			}
+
 			.icon.close {
 				background-image: url('images/icon-close.svg');
 			}
+
 			dialog {
 				font-family: sans-serif;
-				width: 250px;
-				height: 648px;
+				width: 80%;
+				height: 90%;
 				color: white;
 				background-color: rgba(0, 0, 0, 0.8);
 				border: 1px solid #7f7f7f;
 				border-radius: 20px;
 			}
+
 			::backdrop {
 				background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
 				opacity: 0.75;
 			}
+
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
 				/* CSS rules for screens between 400px and 900px */
@@ -142,27 +177,48 @@
 				</div>
 			</div>
 
-			<dialog>
+			<main>
+				<div class="splashscreen">
+					<img src="images/logo.png" width="334" height="107" alt="Seqminaut" />
+				</div>
+			</main>
+
+			<dialog id="infoDialog">
 				<button autofocus>Close</button>
-				<p>This modal dialog has a groovy backdrop!</p>
+				<p>This is information about the seqminaut appication.</p>
+				<a class="icon close" href="#"></a>
+			</dialog>
+
+			<dialog id="settingsDialog">
+				<button autofocus>Close</button>
+				<p>These are settings for seqminaut.</p>
 				<a class="icon close" href="#"></a>
 			</dialog>
 		</div>
 
 		<script>
+			const infoDialog = document.getElementById('infoDialog')
+			const settingsDialog = document.getElementById('settingsDialog')
+
 			function showInfo() {
-				dialog.showModal()
+				infoDialog.showModal()
 			}
 			function showSettings() {
-				alert('Settings soon')
+				settingsDialog.showModal()
 			}
-			const dialog = document.querySelector('dialog')
-			const showButton = document.querySelector('dialog + button')
-			const closeButton = document.querySelector('dialog button')
+			// const dialog = document.querySelector('dialog')
+			// const showButton = document.querySelector('dialog + button')
+			const closeInfoBtn = document.querySelector('#infoDialog button')
+			const closeSettingsBtn = document.querySelector('#settingsDialog button')
 
-			// "Close" button closes the dialog
-			closeButton.addEventListener('click', () => {
-				dialog.close()
+			// "Close" button closes the Information dialog
+			closeInfoBtn.addEventListener('click', () => {
+				infoDialog.close()
+			})
+
+			// "Close" button closes the Information dialog
+			closeSettingsBtn.addEventListener('click', () => {
+				settingsDialog.close()
 			})
 		</script>
 	</body>
