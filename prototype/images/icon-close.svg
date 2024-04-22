@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>+</title>
+    <defs>
+        <polygon id="path-1" points="12.504 17.552 12.504 11.664 17.912 11.664 17.912 7.888 12.504 7.888 12.504 2 8.408 2 8.408 7.888 3 7.888 3 11.664 8.408 11.664 8.408 17.552"></polygon>
+        <filter x="-3.4%" y="-3.2%" width="106.7%" height="112.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.439602617   0 0 0 0 0.439602617   0 0 0 0 0.439602617  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="x" transform="translate(-2.000000, -2.000000)" fill-rule="nonzero">
+            <g id="+" transform="translate(10.456000, 9.776000) rotate(45.000000) translate(-10.456000, -9.776000) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

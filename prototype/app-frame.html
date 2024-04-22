@@ -100,6 +100,18 @@
 			.icon.linkedin {
 				background-image: url('images/icon-linkedin.svg');
 			}
+			.icon.close {
+				background-image: url('images/icon-close.svg');
+			}
+			dialog {
+				font-family: sans-serif;
+				width: 250px;
+				height: 648px;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.8);
+				border: 1px solid #7f7f7f;
+				border-radius: 20px;
+			}
 			::backdrop {
 				background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
 				opacity: 0.75;
@@ -113,7 +125,7 @@
 			}
 		</style>
 		<script>
-			const dialog = document.querySelector('dialog')
+			// const dialog = document.querySelector('dialog')
 		</script>
 	</head>
 	<body>
@@ -130,21 +142,28 @@
 				</div>
 			</div>
 
-			<button onclick="window.dialog.show();">open dialog</button>
-
-			<dialog id="dialog">
-				I'm a dialog.
-				<button onclick="window.dialog.close();">close</button>
+			<dialog>
+				<button autofocus>Close</button>
+				<p>This modal dialog has a groovy backdrop!</p>
+				<a class="icon close" href="#"></a>
 			</dialog>
 		</div>
 
 		<script>
 			function showInfo() {
-				alert('Info soon')
+				dialog.showModal()
 			}
 			function showSettings() {
 				alert('Settings soon')
 			}
+			const dialog = document.querySelector('dialog')
+			const showButton = document.querySelector('dialog + button')
+			const closeButton = document.querySelector('dialog button')
+
+			// "Close" button closes the dialog
+			closeButton.addEventListener('click', () => {
+				dialog.close()
+			})
 		</script>
 	</body>
 </html>
