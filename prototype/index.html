@@ -484,6 +484,15 @@
 				startTimerButton.setAttribute('src', 'images/button-start.png')
 				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
 				resetTimerButton.setAttribute('src', 'images/button-reset.png')
+				startTimerButton.addEventListener('click', () => {
+					startTimer()
+				})
+				pauseTimerButton.addEventListener('click', () => {
+					pauseTimer()
+				})
+				// resetTimerButton.addEventListener('click', () => {
+				// 	startTimer()
+				// })
 			}
 
 			function startTimer() {
@@ -541,7 +550,7 @@
 			}
 
 			// Function to stop the interval
-			function stopTimer() {
+			function pauseTimer() {
 				clearInterval(timers[0])
 			}
 			/*
