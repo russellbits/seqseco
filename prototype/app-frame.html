@@ -1,8 +1,3 @@
-<!--
-    TODOs:
-    1. Create font package for brand
-    2. Create CSS sprites for menu items
--->
 <!doctype html>
 <html lang="en">
 	<head>
@@ -107,7 +102,8 @@
 				margin: auto;
 			}
 
-			.icon {
+			a.icon {
+				display: block;
 				color: white;
 				width: 22px;
 				height: 22px;
@@ -182,15 +178,13 @@
 			</main>
 
 			<dialog id="infoDialog">
-				<button autofocus>Close</button>
+				<a href="#" id="infoCloseBtn" class="icon close"></a>
 				<p>This is information about the seqminaut appication.</p>
-				<a class="icon close" href="#"></a>
 			</dialog>
 
 			<dialog id="settingsDialog">
-				<button autofocus>Close</button>
+				<a href="#" id="settingsCloseBtn" class="icon close"></a>
 				<p>These are settings for seqminaut.</p>
-				<a class="icon close" href="#"></a>
 			</dialog>
 		</div>
 
@@ -206,8 +200,8 @@
 			}
 			// const dialog = document.querySelector('dialog')
 			// const showButton = document.querySelector('dialog + button')
-			const closeInfoBtn = document.querySelector('#infoDialog button')
-			const closeSettingsBtn = document.querySelector('#settingsDialog button')
+			const closeInfoBtn = document.querySelector('#infoCloseBtn')
+			const closeSettingsBtn = document.querySelector('#settingsCloseBtn')
 
 			// "Close" button closes the Information dialog
 			closeInfoBtn.addEventListener('click', () => {
