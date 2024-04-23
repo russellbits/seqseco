@@ -3,261 +3,275 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Single Keystroke Inputs Form</title>
+		<link rel="icon" href="./favicon.icn" />
+		<title>Generic Web App Template</title>
 		<style>
+			@font-face {
+				font-family: 'Montserrat Medium';
+				src:
+					url('fonts/montserrat-medium.woff2') format('woff2'),
+					url('fonts/montserrat-medium.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'Montserrat';
+				src:
+					url('fonts/montserrat.woff2') format('woff2'),
+					url('fonts/montserrat.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'Montserrat Light';
+				src:
+					url('fonts/montserrat-light.woff2') format('woff2'),
+					url('fonts/montserrat-light.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
 			body {
 				color: white;
-				background-color: black;
+				background-color: white;
 				display: flex;
 				height: 100vh;
-			}
-			#app {
-				margin: auto;
-			}
-			.form-row {
-				display: flex;
-				align-items: center;
-				margin-bottom: 10px;
-				text-align: center;
-			}
-			.form-row input {
-				width: 40px;
-				height: 80px;
-				margin: 10px;
-			}
-			input[type='number'] {
-				font:
-					50px 'Din Alternate',
-					monospace;
-				border: 1px solid silver;
-				border-radius: 5px;
-				text-align: center;
-			}
-			input[type='number'].no-arrows::-webkit-inner-spin-button,
-			input[type='number']::-webkit-outer-spin-button {
-				-webkit-appearance: none;
+				padding: 0;
 				margin: 0;
 			}
-			#output {
+
+			#app {
+				display: flex;
+				flex-direction: column;
+				margin: auto;
+				width: 100vw;
+				height: 100vh;
+				background-color: white;
+			}
+			#app.nightmode {
+				background-color: rgb(32, 32, 32);
+			}
+
+			#menu {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				width: 100%;
+				height: 42px;
+				background-color: rgba(131, 0, 198, 0.4);
+			}
+
+			#menu > div.brand {
+				flex: 2;
+				padding: 10px;
+			}
+
+			span.logo {
+				font-family: 'Montserrat Medium';
+				font-size: 18px;
 				color: white;
-				font:
-					50px 'Din Alternate',
-					monospace;
+				text-transform: uppercase;
+			}
+
+			#menu > div.controls {
+				flex: 1;
+				width: 120px;
+				padding: 10px;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			/*#menu > div.right > div {
+				flex: 1;
+				padding: 0;
+				margin: 0 5px;
+			}*/
+
+			main {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 2;
+				padding: 0;
+				margin: 0;
+			}
+
+			.splashscreen {
+				flex: 2;
+				text-align: center;
+				width: 334px;
+				margin: auto;
+			}
+
+			a.icon {
+				display: block;
+				color: white;
+				width: 22px;
+				height: 22px;
+				background-size: cover;
+			}
+
+			.icon.info {
+				background-image: url('images/icon-information.svg');
+			}
+
+			.icon.settings {
+				background-image: url('images/icon-settings.svg');
+			}
+
+			.icon.github {
+				background-image: url('images/icon-github.svg');
+			}
+
+			.icon.linkedin {
+				background-image: url('images/icon-linkedin.svg');
+			}
+
+			.icon.close {
+				background-image: url('images/icon-close.svg');
+			}
+
+			dialog {
+				font-family: sans-serif;
+				width: 80%;
+				height: 90%;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.5);
+				border: 1px solid #7f7f7f;
+				border-radius: 20px;
+			}
+
+			::backdrop {
+				background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
+				opacity: 0.75;
+			}
+
+			/* Styles for screens between 400px and 900px */
+			@media (min-width: 400px) and (max-width: 900px) {
+				/* CSS rules for screens between 400px and 900px */
+				#app {
+					background-color: black;
+				}
 			}
 		</style>
+		<script>
+			// const dialog = document.querySelector('dialog')
+		</script>
 	</head>
 	<body>
-		<div id="app">
-			<div id="output"></div>
-			<form action="#" method="POST">
-				<div class="form-row">
-					<input
-						type="number"
-						name="hours10"
-						id="hours10"
-						min="0"
-						max="6"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
-					<input
-						type="number"
-						name="hours1"
-						id="hours1"
-						min="0"
-						max="9"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
-					&nbsp;:&nbsp;
-					<input
-						type="number"
-						name="minutes10"
-						id="minutes10"
-						min="0"
-						max="6"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
-					<input
-						type="number"
-						name="minutes1"
-						id="minutes1"
-						min="0"
-						max="9"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
-					&nbsp;:&nbsp;
-					<input
-						type="number"
-						name="seconds10"
-						id="seconds10"
-						min="0"
-						max="6"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
-					<input
-						type="number"
-						name="seconds1"
-						id="seconds1"
-						min="0"
-						max="9"
-						class="no-arrows"
-						onkeypress="return isNumberKey(event)"
-					/>
+		<div id="app" class="nightmode">
+			<div id="menu">
+				<div class="brand">
+					<span class="logo">Seqminaut</span>
 				</div>
-				<button type="button" onclick="generateTimer()">Create Timer</button>
-				<button type="button" onclick="startTimer()">Start Timer</button>
-				<button type="button" onclick="stopTimer()">Stop Timer</button>
-			</form>
+				<div class="controls">
+					<a class="icon info" href="#" onclick="showInfo()"></a>
+					<a class="icon settings" href="#" onclick="showSettings()"></a>
+					<a class="icon github" href="https://github.com/russellbits"></a>
+					<a class="icon linkedin" href="https://linkedin.com/in/russellbits"></a>
+				</div>
+			</div>
+
+			<main>
+				<div class="splashscreen">
+					<img src="images/logo.png" width="334" height="107" alt="Seqminaut" />
+				</div>
+				<div class="timer" style="display: flex; flex-direction: row; flex-wrap: wrap">
+					<figure>
+						<img
+							src="images/button-add-timer-inactive.png"
+							width="42"
+							height="76"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+					<figure>
+						<img
+							src="images/button-add-timer.png"
+							width="42"
+							height="76"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+					<figure>
+						<img
+							src="images/button-remove-timer.png"
+							width="42"
+							height="76"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+					<figure>
+						<img src="images/button-start.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure>
+					<figure>
+						<img src="images/button-pause.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure>
+					<figure>
+						<img src="images/button-reset.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure>
+					<figure>
+						<img
+							src="images/button-start-inactive.png"
+							width="78"
+							height="35"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+					<figure>
+						<img
+							src="images/button-pause-inactive.png"
+							width="78"
+							height="35"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+					<figure>
+						<img
+							src="images/button-reset-inactive.png"
+							width="78"
+							height="35"
+							alt="Add timer, inactive"
+						/>
+					</figure>
+				</div>
+			</main>
+
+			<dialog id="infoDialog">
+				<a href="#" id="infoCloseBtn" class="icon close"></a>
+				<p>This is information about the seqminaut appication.</p>
+			</dialog>
+
+			<dialog id="settingsDialog">
+				<a href="#" id="settingsCloseBtn" class="icon close"></a>
+				<p>These are settings for seqminaut.</p>
+			</dialog>
 		</div>
 
 		<script>
-			/*
-			 * TODOs & Questions
-			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
-			 * Setting needed: Insert pause between timers Y/N
-			 *
-			 */
-			let timers = []
-			let timerArray = [0, 0, 0, 0, 0, 0]
-			const timerInputs = document.querySelectorAll('input[type="number"]')
+			const infoDialog = document.getElementById('infoDialog')
+			const settingsDialog = document.getElementById('settingsDialog')
 
-			timerInputs.forEach(function (input, index) {
-				input.addEventListener('input', function () {
-					if (input.value.length === 1) {
-						// Focus on the next input if it exists
-						if (index < timerInputs.length - 1) {
-							timerInputs[index + 1].focus()
-						} else {
-							// Remove focus from all form elements
-							timerInputs.forEach(function (input) {
-								input.blur()
-							})
-						}
-					}
-				})
+			function showInfo() {
+				infoDialog.showModal()
+			}
+			function showSettings() {
+				settingsDialog.showModal()
+			}
+			// const dialog = document.querySelector('dialog')
+			// const showButton = document.querySelector('dialog + button')
+			const closeInfoBtn = document.querySelector('#infoCloseBtn')
+			const closeSettingsBtn = document.querySelector('#settingsCloseBtn')
+
+			// "Close" button closes the Information dialog
+			closeInfoBtn.addEventListener('click', () => {
+				infoDialog.close()
 			})
 
-			function isNumberKey(evt) {
-				var charCode = evt.which ? evt.which : evt.keyCode
-				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
-				return true
-			}
-
-			function generateTimer() {
-				timerInputs.forEach(function (input, index) {
-					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
-				})
-				// Create the span elements
-				var hoursSpan = document.createElement('span')
-				hoursSpan.setAttribute('id', 'hours')
-				hoursSpan.textContent = `${timerArray[0]}${timerArray[1]}`
-
-				var minutesSpan = document.createElement('span')
-				minutesSpan.setAttribute('id', 'minutes')
-				minutesSpan.textContent = `${timerArray[2]}${timerArray[3]}`
-
-				var secondsSpan = document.createElement('span')
-				secondsSpan.setAttribute('id', 'seconds')
-				secondsSpan.textContent = `${timerArray[4]}${timerArray[5]}`
-
-				// Get the parent element to which the spans will be appended
-				var parentElement = document.getElementById('output')
-
-				// Append the span elements to the parent element
-				parentElement.appendChild(hoursSpan)
-				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
-				parentElement.appendChild(minutesSpan)
-				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
-				parentElement.appendChild(secondsSpan)
-			}
-
-			function startTimer() {
-				timers[0] = setInterval(function () {
-					// Decrement the last element of the array (seconds)
-					timerArray[5]--
-
-					// If seconds reach 0, decrement the next element (tens of seconds)
-					if (timerArray[5] < 0) {
-						timerArray[5] = 9
-						timerArray[4]--
-					}
-
-					// If tens of seconds reach -1, decrement the next element (minutes)
-					if (timerArray[4] < 0) {
-						timerArray[4] = 5
-						timerArray[3]--
-					}
-
-					// If minutes reach -1, decrement the next element (tens of minutes)
-					if (timerArray[3] < 0) {
-						timerArray[3] = 9
-						timerArray[2]--
-					}
-
-					// If tens of minutes reach -1, decrement the next element (hours)
-					if (timerArray[2] < 0) {
-						timerArray[2] = 5
-						timerArray[1]--
-					}
-
-					// If hours reach -1, decrement the next element (tens of hours)
-					if (timerArray[1] < 0) {
-						timerArray[1] = 9
-						timerArray[0]--
-					}
-
-					// If all elements become 0, stop the countdown
-					if (timerArray.every((value) => value === 0)) {
-						clearInterval(timer)
-					}
-
-					displayTimer(timerArray)
-				}, 100) // Interval of tenths of a second (100 milliseconds)
-			}
-
-			function displayTimer(timerArray) {
-				// debugging
-				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
-				// console.log(resultString) // or do something else with the result string
-
-				document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`
-				document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`
-				document.getElementById('seconds').innerText = `${timerArray[4]}${timerArray[5]}`
-			}
-
-			// Function to stop the interval
-			function stopTimer() {
-				clearInterval(timers[0])
-			}
-			/*
-			{
-			  "timers": {
-  				"Sit-Ups": [
-					0,
-					0,
-					0,
-					3,
-					3,
-					0
-				],
-				"Push-Ups": [
-					0,
-					0,
-					0,
-					2,
-					0,
-					0
-  				]},
-  				"settings": {
-    				"nightmode": true,
-    				"interpause": false
-  				},
-  				"string": "Hello World"
-			music}*/
+			// "Close" button closes the Information dialog
+			closeSettingsBtn.addEventListener('click', () => {
+				settingsDialog.close()
+			})
 		</script>
 	</body>
 </html>

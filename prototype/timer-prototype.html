@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Single Keystroke Inputs Form</title>
+		<style>
+			body {
+				color: white;
+				background-color: black;
+				display: flex;
+				height: 100vh;
+			}
+			#app {
+				margin: auto;
+			}
+			.form-row {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+				text-align: center;
+			}
+			.form-row input {
+				width: 40px;
+				height: 80px;
+				margin: 10px;
+			}
+			input[type='number'] {
+				font:
+					50px 'Din Alternate',
+					monospace;
+				border: 1px solid silver;
+				border-radius: 5px;
+				text-align: center;
+			}
+			input[type='number'].no-arrows::-webkit-inner-spin-button,
+			input[type='number']::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+			#output {
+				color: white;
+				font:
+					50px 'Din Alternate',
+					monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div id="output"></div>
+			<form action="#" method="POST">
+				<div class="form-row">
+					<input
+						type="number"
+						name="hours10"
+						id="hours10"
+						min="0"
+						max="6"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="hours1"
+						id="hours1"
+						min="0"
+						max="9"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					&nbsp;:&nbsp;
+					<input
+						type="number"
+						name="minutes10"
+						id="minutes10"
+						min="0"
+						max="6"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="minutes1"
+						id="minutes1"
+						min="0"
+						max="9"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					&nbsp;:&nbsp;
+					<input
+						type="number"
+						name="seconds10"
+						id="seconds10"
+						min="0"
+						max="6"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+					<input
+						type="number"
+						name="seconds1"
+						id="seconds1"
+						min="0"
+						max="9"
+						class="no-arrows"
+						onkeypress="return isNumberKey(event)"
+					/>
+				</div>
+				<button type="button" onclick="generateTimer()">Create Timer</button>
+				<button type="button" onclick="startTimer()">Start Timer</button>
+				<button type="button" onclick="stopTimer()">Stop Timer</button>
+			</form>
+		</div>
+
+		<script>
+			/*
+			 * TODOs & Questions
+			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
+			 * Setting needed: Insert pause between timers Y/N
+			 *
+			 */
+			let timers = []
+			let timerArray = [0, 0, 0, 0, 0, 0]
+			const timerInputs = document.querySelectorAll('input[type="number"]')
+
+			timerInputs.forEach(function (input, index) {
+				input.addEventListener('input', function () {
+					if (input.value.length === 1) {
+						// Focus on the next input if it exists
+						if (index < timerInputs.length - 1) {
+							timerInputs[index + 1].focus()
+						} else {
+							// Remove focus from all form elements
+							timerInputs.forEach(function (input) {
+								input.blur()
+							})
+						}
+					}
+				})
+			})
+
+			function isNumberKey(evt) {
+				var charCode = evt.which ? evt.which : evt.keyCode
+				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
+				return true
+			}
+
+			function generateTimer() {
+				timerInputs.forEach(function (input, index) {
+					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
+				})
+				// Create the span elements
+				var hoursSpan = document.createElement('span')
+				hoursSpan.setAttribute('id', 'hours')
+				hoursSpan.textContent = `${timerArray[0]}${timerArray[1]}`
+
+				var minutesSpan = document.createElement('span')
+				minutesSpan.setAttribute('id', 'minutes')
+				minutesSpan.textContent = `${timerArray[2]}${timerArray[3]}`
+
+				var secondsSpan = document.createElement('span')
+				secondsSpan.setAttribute('id', 'seconds')
+				secondsSpan.textContent = `${timerArray[4]}${timerArray[5]}`
+
+				// Get the parent element to which the spans will be appended
+				var parentElement = document.getElementById('output')
+
+				// Append the span elements to the parent element
+				parentElement.appendChild(hoursSpan)
+				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
+				parentElement.appendChild(minutesSpan)
+				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
+				parentElement.appendChild(secondsSpan)
+			}
+
+			function startTimer() {
+				timers[0] = setInterval(function () {
+					// Decrement the last element of the array (seconds)
+					timerArray[5]--
+
+					// If seconds reach 0, decrement the next element (tens of seconds)
+					if (timerArray[5] < 0) {
+						timerArray[5] = 9
+						timerArray[4]--
+					}
+
+					// If tens of seconds reach -1, decrement the next element (minutes)
+					if (timerArray[4] < 0) {
+						timerArray[4] = 5
+						timerArray[3]--
+					}
+
+					// If minutes reach -1, decrement the next element (tens of minutes)
+					if (timerArray[3] < 0) {
+						timerArray[3] = 9
+						timerArray[2]--
+					}
+
+					// If tens of minutes reach -1, decrement the next element (hours)
+					if (timerArray[2] < 0) {
+						timerArray[2] = 5
+						timerArray[1]--
+					}
+
+					// If hours reach -1, decrement the next element (tens of hours)
+					if (timerArray[1] < 0) {
+						timerArray[1] = 9
+						timerArray[0]--
+					}
+
+					// If all elements become 0, stop the countdown
+					if (timerArray.every((value) => value === 0)) {
+						clearInterval(timer)
+					}
+
+					displayTimer(timerArray)
+				}, 100) // Interval of tenths of a second (100 milliseconds)
+			}
+
+			function displayTimer(timerArray) {
+				// debugging
+				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
+				// console.log(resultString) // or do something else with the result string
+
+				document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`
+				document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`
+				document.getElementById('seconds').innerText = `${timerArray[4]}${timerArray[5]}`
+			}
+
+			// Function to stop the interval
+			function stopTimer() {
+				clearInterval(timers[0])
+			}
+			/*
+			{
+			  "timers": {
+  				"Sit-Ups": [
+					0,
+					0,
+					0,
+					3,
+					3,
+					0
+				],
+				"Push-Ups": [
+					0,
+					0,
+					0,
+					2,
+					0,
+					0
+  				]},
+  				"settings": {
+    				"nightmode": true,
+    				"interpause": false
+  				},
+  				"string": "Hello World"
+			music}*/
+		</script>
+	</body>
+</html>
