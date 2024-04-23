@@ -94,6 +94,10 @@
 				flex-grow: 2;
 				padding: 0;
 				margin: 0;
+				background-image: url('images/logo.png');
+				background-size: 334px 107px;
+				background-repeat: no-repeat;
+				background-position: center;
 			}
 
 			.splashscreen {
@@ -129,6 +133,20 @@
 
 			.icon.close {
 				background-image: url('images/icon-close.svg');
+			}
+			.timer-controls {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				justify-content: space-between;
+				margin: 12px;
+				padding: 0;
+			}
+			.timer-controls > div {
+				display: block;
+				width: 78px;
+				margin: 0;
+				padding: 0;
 			}
 
 			dialog {
@@ -173,11 +191,44 @@
 			</div>
 
 			<main>
-				<div class="splashscreen">
-					<img src="images/logo.png" width="334" height="107" alt="Seqminaut" />
+				<div class="timer-controls">
+					<div>
+						<img
+							src="images/button-start-inactive.png"
+							width="78"
+							height="35"
+							alt="Start timer, inactive"
+						/>
+					</div>
+					<div>
+						<img
+							src="images/button-pause-inactive.png"
+							width="78"
+							height="35"
+							alt="Pause timer, inactive"
+						/>
+					</div>
+					<div>
+						<img
+							src="images/button-reset-inactive.png"
+							width="78"
+							height="35"
+							alt="Remove timer, inactive"
+						/>
+					</div>
 				</div>
-				<div class="timer" style="display: flex; flex-direction: row; flex-wrap: wrap">
+			</main>
+			<!-- <figure>
+						<img src="images/button-start.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure>
 					<figure>
+						<img src="images/button-pause.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure>
+					<figure>
+						<img src="images/button-reset.png" width="78" height="35" alt="Add timer, inactive" />
+					</figure> -->
+			<!--
+				<figure>
 						<img
 							src="images/button-add-timer-inactive.png"
 							width="42"
@@ -201,41 +252,7 @@
 							alt="Add timer, inactive"
 						/>
 					</figure>
-					<figure>
-						<img src="images/button-start.png" width="78" height="35" alt="Add timer, inactive" />
-					</figure>
-					<figure>
-						<img src="images/button-pause.png" width="78" height="35" alt="Add timer, inactive" />
-					</figure>
-					<figure>
-						<img src="images/button-reset.png" width="78" height="35" alt="Add timer, inactive" />
-					</figure>
-					<figure>
-						<img
-							src="images/button-start-inactive.png"
-							width="78"
-							height="35"
-							alt="Add timer, inactive"
-						/>
-					</figure>
-					<figure>
-						<img
-							src="images/button-pause-inactive.png"
-							width="78"
-							height="35"
-							alt="Add timer, inactive"
-						/>
-					</figure>
-					<figure>
-						<img
-							src="images/button-reset-inactive.png"
-							width="78"
-							height="35"
-							alt="Add timer, inactive"
-						/>
-					</figure>
-				</div>
-			</main>
+			-->
 
 			<dialog id="infoDialog">
 				<a href="#" id="infoCloseBtn" class="icon close"></a>
