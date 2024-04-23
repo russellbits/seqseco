@@ -156,13 +156,14 @@
 			.form-row {
 				display: flex;
 				align-items: center;
+				font-size: 50px;
 				margin-bottom: 10px;
 				text-align: center;
 			}
 			.form-row input {
 				width: 40px;
-				height: 80px;
-				margin: 10px;
+				height: 72px;
+				margin: 4px;
 			}
 			input[type='number'] {
 				font:
@@ -176,6 +177,12 @@
 			input[type='number']::-webkit-outer-spin-button {
 				-webkit-appearance: none;
 				margin: 0;
+			}
+			#addTimerBtn {
+				margin: 0px 4px;
+			}
+			#addTimerBtn > img:hover {
+				cursor: pointer;
 			}
 			#output {
 				color: white;
@@ -310,7 +317,7 @@
 							class="no-arrows"
 							onkeypress="return isNumberKey(event)"
 						/>
-						&nbsp;:&nbsp;
+						:
 						<input
 							type="number"
 							name="minutes10"
@@ -329,7 +336,7 @@
 							class="no-arrows"
 							onkeypress="return isNumberKey(event)"
 						/>
-						&nbsp;:&nbsp;
+						:
 						<input
 							type="number"
 							name="seconds10"
@@ -348,10 +355,19 @@
 							class="no-arrows"
 							onkeypress="return isNumberKey(event)"
 						/>
+						<img
+							id="addTimerBtn"
+							src="images/button-add-timer-inactive.png"
+							onclick="generateTimer()"
+							width="42"
+							height="76"
+							alt="Add timer, inactive"
+						/>
 					</div>
-					<button type="button" onclick="generateTimer()">Create Timer</button>
+
+					<!--<button type="button" onclick="generateTimer()">Create Timer</button>
 					<button type="button" onclick="startTimer()">Start Timer</button>
-					<button type="button" onclick="stopTimer()">Stop Timer</button>
+					<button type="button" onclick="stopTimer()">Stop Timer</button>-->
 				</form>
 			</div>
 
@@ -395,20 +411,24 @@
 			 * TODOs & Questions
 			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
 			 * Setting needed: Insert pause between timers Y/N
-			 *
 			 */
 			let timers = []
 			let timerArray = [0, 0, 0, 0, 0, 0]
 			const timerInputs = document.querySelectorAll('input[type="number"]')
+			let addTimerButton = document.getElementById('addTimerBtn')
 
 			timerInputs.forEach(function (input, index) {
 				input.addEventListener('input', function () {
 					if (input.value.length === 1) {
 						// Focus on the next input if it exists
 						if (index < timerInputs.length - 1) {
+							if (index === 0) {
+								addTimerButton.setAttribute('src', 'images/button-add-timer.png')
+							}
 							timerInputs[index + 1].focus()
 						} else {
 							// Remove focus from all form elements
+							// Possibly change this so that the focus moves to the add timer button
 							timerInputs.forEach(function (input) {
 								input.blur()
 							})
@@ -420,6 +440,7 @@
 			function isNumberKey(evt) {
 				var charCode = evt.which ? evt.which : evt.keyCode
 				if (charCode > 31 && (charCode < 48 || charCode > 57)) return false
+				// Is number acceptable for tenths time? (0-6)
 				return true
 			}
 
