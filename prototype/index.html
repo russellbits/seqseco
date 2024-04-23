@@ -236,6 +236,7 @@
 				<div class="timerControls">
 					<div>
 						<img
+							id="startTimerButton"
 							src="images/button-start-inactive.png"
 							width="78"
 							height="35"
@@ -244,6 +245,7 @@
 					</div>
 					<div>
 						<img
+							id="pauseTimerButton"
 							src="images/button-pause-inactive.png"
 							width="78"
 							height="35"
@@ -252,6 +254,7 @@
 					</div>
 					<div>
 						<img
+							id="resetTimerButton"
 							src="images/button-reset-inactive.png"
 							width="78"
 							height="35"
@@ -296,8 +299,8 @@
 					</figure>
 			-->
 			<div id="timerInput">
-				<div id="output"></div>
-				<form action="#" method="POST">
+				<div id="output" style="border: 1px solid purple"></div>
+				<form action="#" method="POST" style="border: 1px solid purple">
 					<div class="form-row">
 						<input
 							type="number"
@@ -416,6 +419,9 @@
 			let timerArray = [0, 0, 0, 0, 0, 0]
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 			let addTimerButton = document.getElementById('addTimerBtn')
+			let startTimerButton = document.getElementById('startTimerButton')
+			let pauseTimerButton = document.getElementById('pauseTimerButton')
+			let resetTimerButton = document.getElementById('resetTimerButton')
 
 			timerInputs.forEach(function (input, index) {
 				input.addEventListener('input', function () {
@@ -470,6 +476,14 @@
 				parentElement.appendChild(minutesSpan)
 				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
 				parentElement.appendChild(secondsSpan)
+
+				activateControls()
+			}
+
+			function activateControls() {
+				startTimerButton.setAttribute('src', 'images/button-start.png')
+				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
+				resetTimerButton.setAttribute('src', 'images/button-reset.png')
 			}
 
 			function startTimer() {
