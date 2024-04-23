@@ -190,6 +190,9 @@
 					50px 'Din Alternate',
 					monospace;
 			}
+			#output {
+				border-bottom: 1px solid #979797;
+			}
 
 			dialog {
 				font-family: sans-serif;
@@ -298,8 +301,8 @@
 						/>
 					</figure>
 			-->
+			<div id="output" style="border: 1px solid purple"></div>
 			<div id="timerInput">
-				<div id="output" style="border: 1px solid purple"></div>
 				<form action="#" method="POST" style="border: 1px solid purple">
 					<div class="form-row">
 						<input
@@ -386,6 +389,9 @@
 		</div>
 
 		<script>
+			/*
+			 * Dialog box controls
+			 */
 			const infoDialog = document.getElementById('infoDialog')
 			const settingsDialog = document.getElementById('settingsDialog')
 
@@ -411,6 +417,7 @@
 			})
 
 			/*
+			 * Timer functions and controls
 			 * TODOs & Questions
 			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
 			 * Setting needed: Insert pause between timers Y/N
