@@ -525,6 +525,11 @@
 			}
 			*/
 
+			/* Utility for generateTimer */
+			function insertAfter(newNode, referenceNode) {
+				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
+			}
+
 			function generateTimer() {
 				var outputDiv = document.getElementById('output')
 				var clonedDiv = outputDiv.cloneNode(true) // Passing true clones all child nodes as well
@@ -547,7 +552,8 @@
 				// Set visibility to visible
 				clonedDiv.style.visibility = 'visible'
 
-				outputDiv.parentNode.insertBefore(clonedDiv, outputDiv)
+				//outputDiv.parentNode.insertBefore(clonedDiv, outputDiv)
+				insertAfter(clonedDiv, outputDiv)
 			}
 
 			function activateControls() {
