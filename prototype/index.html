@@ -80,6 +80,7 @@
 				padding: 10px;
 				display: flex;
 				justify-content: space-between;
+				border: 1px solid purple;
 			}
 
 			/*#menu > div.right > div {
@@ -92,19 +93,16 @@
 				display: flex;
 				flex-direction: column;
 				flex-grow: 2;
+				flex-wrap: nowrap;
+				justify-content: flex-end;
 				padding: 0;
 				margin: 0;
 				background-image: url('images/logo.png');
+				background-color: rgba(0, 0, 0, 0.5);
 				background-size: 334px 107px;
 				background-repeat: no-repeat;
 				background-position: center;
-			}
-
-			.splashscreen {
-				flex: 2;
-				text-align: center;
-				width: 334px;
-				margin: auto;
+				border: 1px solid red;
 			}
 
 			a.icon {
@@ -141,7 +139,9 @@
 				justify-content: space-between;
 				margin: 12px;
 				padding: 0;
+				border: 1px solid yellow;
 			}
+
 			.timerControls > div {
 				display: block;
 				width: 78px;
@@ -149,8 +149,10 @@
 				padding: 0;
 			}
 
-			.timerInput {
+			#timerInput {
 				padding: 0;
+				margin: 0 12px;
+				border: 1px solid green;
 			}
 
 			.form-row {
@@ -162,7 +164,7 @@
 			}
 			.form-row input {
 				width: 40px;
-				height: 72px;
+				height: 70px;
 				margin: 4px;
 			}
 			input[type='number'] {
@@ -197,6 +199,7 @@
 				margin: 0px 12px 12px 12px;
 				border-bottom: 1px solid #979797;
 				visibility: hidden;
+				border: 1px solid green;
 			}
 			.timer .timerName {
 				font:
@@ -252,37 +255,37 @@
 				</div>
 			</div>
 
-			<main>
-				<div class="timerControls">
-					<div>
-						<img
-							id="startTimerButton"
-							src="images/button-start-inactive.png"
-							width="78"
-							height="35"
-							alt="Start timer, inactive"
-						/>
-					</div>
-					<div>
-						<img
-							id="pauseTimerButton"
-							src="images/button-pause-inactive.png"
-							width="78"
-							height="35"
-							alt="Pause timer, inactive"
-						/>
-					</div>
-					<div>
-						<img
-							id="resetTimerButton"
-							src="images/button-reset-inactive.png"
-							width="78"
-							height="35"
-							alt="Remove timer, inactive"
-						/>
-					</div>
+			<div class="timerControls">
+				<div>
+					<img
+						id="startTimerButton"
+						src="images/button-start-inactive.png"
+						width="78"
+						height="35"
+						alt="Start timer, inactive"
+					/>
 				</div>
+				<div>
+					<img
+						id="pauseTimerButton"
+						src="images/button-pause-inactive.png"
+						width="78"
+						height="35"
+						alt="Pause timer, inactive"
+					/>
+				</div>
+				<div>
+					<img
+						id="resetTimerButton"
+						src="images/button-reset-inactive.png"
+						width="78"
+						height="35"
+						alt="Remove timer, inactive"
+					/>
+				</div>
+			</div>
 
+			<main>
 				<!-- sample graphics -->
 				<!-- <figure>
 						<img src="images/button-start.png" width="78" height="35" alt="Add timer, inactive" />
@@ -322,7 +325,7 @@
 				<!--
 				Timer template
 				Will be initially hidden via CSS.
-			-->
+				-->
 				<div id="timer-0" class="timer">
 					<div class="leftColumn">
 						<div>
@@ -462,7 +465,7 @@
 			 */
 			let timers = []
 			let timerArray = [0, 0, 0, 0, 0, 0]
-			let activeTimerId = 0
+			let lastCreatedTimerId = 0
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 			let addTimerButton = document.getElementById('addTimerBtn')
 			let startTimerButton = document.getElementById('startTimerButton')
@@ -497,12 +500,12 @@
 			}
 
 			function generateTimer() {
-				var timerTemplateDiv = document.getElementById(`timer-${activeTimerId}`)
+				var timerTemplateDiv = document.getElementById(`timer-${lastCreatedTimerId}`)
 				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
-				console.log(activeTimerId)
-				activeTimerId = activeTimerId + 1
-				console.log(activeTimerId)
-				clonedDiv.id = `timer-${activeTimerId}`
+				console.log(lastCreatedTimerId)
+				lastCreatedTimerId = lastCreatedTimerId + 1
+				console.log(lastCreatedTimerId)
+				clonedDiv.id = `timer-${lastCreatedTimerId}`
 				var hoursSpan = clonedDiv.querySelector('.hours')
 				var minutesSpan = clonedDiv.querySelector('.minutes')
 				var secondsSpan = clonedDiv.querySelector('.seconds')
