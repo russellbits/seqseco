@@ -478,6 +478,7 @@
 			let lastCreatedTimerId = 0
 			let activeTimerId = 0
 			let activeTimer
+			var mainElement = document.querySelector('main')
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 			let addTimerButton = document.getElementById('addTimerBtn')
 			let startTimerButton = document.getElementById('startTimerButton')
@@ -514,7 +515,6 @@
 			function generateTimer() {
 				// Change the background to main on generation of first timer
 				if (lastCreatedTimerId === 0) {
-					var mainElement = document.querySelector('main')
 					mainElement.style.backgroundImage = `url('images/logo-faded.png')`
 				}
 
@@ -579,7 +579,7 @@
 			function activateControls() {
 				startTimerButton.setAttribute('src', 'images/button-start.png')
 				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
-				resetTimerButton.setAttribute('src', 'images/button-reset.png')
+				// resetTimerButton.setAttribute('src', 'images/button-reset.png')
 
 				startTimerButton.addEventListener('click', startTimer)
 				pauseTimerButton.addEventListener('click', pauseTimer)
@@ -596,6 +596,7 @@
 				startTimerButton.removeEventListener('click', startTimer)
 				pauseTimerButton.removeEventListener('click', pauseTimer)
 				// resetTimerButton.removeEventListener('click')
+				mainElement.style.backgroundImage = `url('images/logo.png')`
 			}
 
 			function startTimer() {
