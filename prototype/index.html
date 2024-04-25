@@ -102,7 +102,6 @@
 				background-size: 334px 107px;
 				background-repeat: no-repeat;
 				background-position: center;
-				border: 1px solid red;
 			}
 
 			a.icon {
@@ -139,7 +138,6 @@
 				justify-content: space-between;
 				margin: 12px;
 				padding: 0;
-				border: 1px solid yellow;
 			}
 
 			.timerControls > div {
@@ -187,6 +185,7 @@
 				cursor: pointer;
 			}
 			.timer {
+				/* initially the template */
 				display: none;
 				flex-direction: row;
 				flex-wrap: nowrap;
@@ -199,7 +198,6 @@
 				margin: 0px 12px 12px 12px;
 				border-bottom: 1px solid #979797;
 				visibility: collapse;
-				border: 1px solid green;
 			}
 			.timer .timerName {
 				font:
@@ -471,6 +469,8 @@
 			let timers = ['template']
 			let timerArray = [0, 0, 0, 0, 0, 0]
 			let lastCreatedTimerId = 0
+			let activeTimerId = 0
+			let activeTimer
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 			let addTimerButton = document.getElementById('addTimerBtn')
 			let startTimerButton = document.getElementById('startTimerButton')
@@ -511,6 +511,11 @@
 					mainElement.style.backgroundImage = `url('images/logo-faded.png')`
 				}
 
+				// Activate or de-activate controls based on timers array
+				if (timers.length === 1) {
+					activateControls()
+				}
+
 				var timerTemplateDiv = document.getElementById(timers[0])
 				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
 				lastCreatedTimerId = lastCreatedTimerId + 1
@@ -521,6 +526,7 @@
 				var hoursSpan = clonedDiv.querySelector('.hours')
 				var minutesSpan = clonedDiv.querySelector('.minutes')
 				var secondsSpan = clonedDiv.querySelector('.seconds')
+				var timerNameSpan = clonedDiv.querySelector('.timerName')
 
 				console.log('Timers array length:', timers.length)
 				console.log('Last generated timer:', timers[timers.length - 1])
@@ -533,10 +539,12 @@
 				var hours = `${timerArray[0]}${timerArray[1]}`
 				var minutes = `${timerArray[2]}${timerArray[3]}`
 				var seconds = `${timerArray[4]}${timerArray[5]}`
+				var timerName = `Doo daa`
 
 				hoursSpan.textContent = hours
 				minutesSpan.textContent = minutes
 				secondsSpan.textContent = seconds
+				timerNameSpan.textContent = timerName
 
 				// Styling updates
 				clonedDiv.style.display = 'flex'
@@ -544,7 +552,6 @@
 
 				lastGeneratedTimer.insertAdjacentElement('afterend', clonedDiv)
 				timers.push(newTimerId)
-				activateControls()
 			}
 
 			function deleteTimer() {
@@ -555,6 +562,10 @@
 				if (index !== -1) {
 					timers.splice(index, 1)
 				}
+				if (timers.length === 1) {
+					console.log('No timers, de-activating controls.')
+					deactivateControls()
+				}
 				timerDiv.remove()
 			}
 
@@ -562,19 +573,27 @@
 				startTimerButton.setAttribute('src', 'images/button-start.png')
 				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
 				resetTimerButton.setAttribute('src', 'images/button-reset.png')
-				startTimerButton.addEventListener('click', () => {
-					startTimer()
-				})
-				pauseTimerButton.addEventListener('click', () => {
-					pauseTimer()
-				})
+
+				startTimerButton.addEventListener('click', startTimer)
+				pauseTimerButton.addEventListener('click', pauseTimer)
 				// resetTimerButton.addEventListener('click', () => {
 				// 	startTimer()
 				// })
 			}
 
+			function deactivateControls() {
+				startTimerButton.setAttribute('src', 'images/button-start-inactive.png')
+				pauseTimerButton.setAttribute('src', 'images/button-pause-inactive.png')
+				resetTimerButton.setAttribute('src', 'images/button-reset-inactive.png')
+
+				startTimerButton.removeEventListener('click', startTimer)
+				pauseTimerButton.removeEventListener('click', pauseTimer)
+				// resetTimerButton.removeEventListener('click')
+			}
+
 			function startTimer() {
-				timers[1] = setInterval(function () {
+				//console.log('Activating ', timerDivId)
+				activeTimer = setInterval(function () {
 					// Decrement the last element of the array (seconds)
 					timerArray[5]--
 
@@ -610,29 +629,33 @@
 
 					// If all elements become 0, stop the countdown
 					if (timerArray.every((value) => value === 0)) {
-						clearInterval(timer)
+						clearInterval(activeTimer)
 					}
 
 					displayTimer(timerArray)
 				}, 100) // Interval of tenths of a second (100 milliseconds)
+				console.log(activeTimer)
 			}
 
 			function displayTimer(timerArray) {
 				// debugging
 				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
 				// console.log(resultString) // or do something else with the result string
+				currentTimer = document.getElementById(timers[timers.length - 1])
+				console.log('Current timer is ', currentTimer)
 
-				document.getElementById('hours').innerText = `${timerArray[0]}${timerArray[1]}`
-				document.getElementById('minutes').innerText = `${timerArray[2]}${timerArray[3]}`
-				document.getElementById('seconds').innerText = `${timerArray[4]}${timerArray[5]}`
+				currentTimer.querySelector('.hours').innerText = `${timerArray[0]}${timerArray[1]}`
+				currentTimer.querySelector('.minutes').innerText = `${timerArray[2]}${timerArray[3]}`
+				currentTimer.querySelector('.seconds').innerText = `${timerArray[4]}${timerArray[5]}`
 			}
 
 			// Function to stop the interval
 			function pauseTimer() {
-				clearInterval(timers[0])
+				console.log(`Pause activated for timer ${timers[timers.length - 1]}`)
+				clearInterval(activeTimer)
 			}
 			/*
-			{
+			const exerciseTimer = {
 			  "timers": {
 						"Sit-Ups": [
 					0,
@@ -649,7 +672,10 @@
 					2,
 					0,
 					0
-						]},
+						],
+					"Burpees": [
+						0,0,1,0,1,0
+					]},
 						"settings": {
 			 				"nightmode": true,
 			 				"interpause": false
