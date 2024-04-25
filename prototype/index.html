@@ -184,7 +184,7 @@
 			#addTimerBtn > img:hover {
 				cursor: pointer;
 			}
-			.output {
+			.timer {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: nowrap;
@@ -198,12 +198,12 @@
 				border-bottom: 1px solid #979797;
 				visibility: hidden;
 			}
-			.output .timerName {
+			.timer .timerName {
 				font:
 					18px 'IBM Plex Sans',
 					sans-serif;
 			}
-			.output > div > span > small {
+			.timer > div > span > small {
 				/* tenths of a second */
 				font:
 					36px 'Din Alternate',
@@ -282,8 +282,9 @@
 						/>
 					</div>
 				</div>
-			</main>
-			<!-- <figure>
+
+				<!-- sample graphics -->
+				<!-- <figure>
 						<img src="images/button-start.png" width="78" height="35" alt="Add timer, inactive" />
 					</figure>
 					<figure>
@@ -291,8 +292,7 @@
 					</figure>
 					<figure>
 						<img src="images/button-reset.png" width="78" height="35" alt="Add timer, inactive" />
-					</figure> -->
-			<!--
+					</figure>
 				<figure>
 						<img
 							src="images/button-add-timer-inactive.png"
@@ -319,110 +319,112 @@
 					</figure>
 			-->
 
-			<!--
+				<!--
 				Timer template
 				Will be initially hidden via CSS.
 			-->
-			<div id="0" class="output">
-				<div class="leftColumn">
-					<div>
-						<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds"
-							>00</span
-						><span class="tenthSeconds"><small>.00</small></span>
+				<div id="timer-0" class="timer">
+					<div class="leftColumn">
+						<div>
+							<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds"
+								>00</span
+							><span class="tenthSeconds"><small>.00</small></span>
+						</div>
+						<div class="timerName">Timer Name</div>
 					</div>
-					<div class="timerName">Timer Name</div>
-				</div>
-				<div class="rightColumn">
-					<img src="images/button-remove-timer.png" width="42" height="76" />
-				</div>
-			</div>
-
-			<!--Timer input -->
-			<div id="timerInput">
-				<form action="#" method="POST">
-					<div class="form-row">
-						<input
-							type="number"
-							name="hours10"
-							id="hours10"
-							min="0"
-							max="6"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						<input
-							type="number"
-							name="hours1"
-							id="hours1"
-							min="0"
-							max="9"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						:
-						<input
-							type="number"
-							name="minutes10"
-							id="minutes10"
-							min="0"
-							max="6"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						<input
-							type="number"
-							name="minutes1"
-							id="minutes1"
-							min="0"
-							max="9"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						:
-						<input
-							type="number"
-							name="seconds10"
-							id="seconds10"
-							min="0"
-							max="6"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						<input
-							type="number"
-							name="seconds1"
-							id="seconds1"
-							min="0"
-							max="9"
-							class="no-arrows"
-							onkeypress="return isNumberKey(event)"
-						/>
-						<img
-							id="addTimerBtn"
-							src="images/button-add-timer-inactive.png"
-							onclick="generateTimer()"
-							width="42"
-							height="76"
-							alt="Add timer, inactive"
-						/>
+					<div class="rightColumn">
+						<img src="images/button-remove-timer.png" width="42" height="76" />
 					</div>
+				</div>
 
-					<!--<button type="button" onclick="generateTimer()">Create Timer</button>
+				<!--Timer input -->
+				<div id="timerInput">
+					<form action="#" method="POST">
+						<div class="form-row">
+							<input
+								type="number"
+								name="hours10"
+								id="hours10"
+								min="0"
+								max="6"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							<input
+								type="number"
+								name="hours1"
+								id="hours1"
+								min="0"
+								max="9"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							:
+							<input
+								type="number"
+								name="minutes10"
+								id="minutes10"
+								min="0"
+								max="6"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							<input
+								type="number"
+								name="minutes1"
+								id="minutes1"
+								min="0"
+								max="9"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							:
+							<input
+								type="number"
+								name="seconds10"
+								id="seconds10"
+								min="0"
+								max="6"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							<input
+								type="number"
+								name="seconds1"
+								id="seconds1"
+								min="0"
+								max="9"
+								class="no-arrows"
+								onkeypress="return isNumberKey(event)"
+							/>
+							<img
+								id="addTimerBtn"
+								src="images/button-add-timer-inactive.png"
+								onclick="generateTimer()"
+								width="42"
+								height="76"
+								alt="Add timer, inactive"
+							/>
+						</div>
+
+						<!--<button type="button" onclick="generateTimer()">Create Timer</button>
 					<button type="button" onclick="startTimer()">Start Timer</button>
 					<button type="button" onclick="stopTimer()">Stop Timer</button>-->
-				</form>
-			</div>
+					</form>
+				</div>
 
-			<dialog id="infoDialog">
-				<a href="#" id="infoCloseBtn" class="icon close"></a>
-				<p>This is information about the seqminaut appication.</p>
-			</dialog>
+				<dialog id="infoDialog">
+					<a href="#" id="infoCloseBtn" class="icon close"></a>
+					<p>This is information about the seqminaut appication.</p>
+				</dialog>
 
-			<dialog id="settingsDialog">
-				<a href="#" id="settingsCloseBtn" class="icon close"></a>
-				<p>These are settings for seqminaut.</p>
-			</dialog>
+				<dialog id="settingsDialog">
+					<a href="#" id="settingsCloseBtn" class="icon close"></a>
+					<p>These are settings for seqminaut.</p>
+				</dialog>
+			</main>
 		</div>
+		<!-- close app -->
 
 		<script>
 			/*
@@ -460,6 +462,7 @@
 			 */
 			let timers = []
 			let timerArray = [0, 0, 0, 0, 0, 0]
+			let activeTimerId = 0
 			const timerInputs = document.querySelectorAll('input[type="number"]')
 			let addTimerButton = document.getElementById('addTimerBtn')
 			let startTimerButton = document.getElementById('startTimerButton')
@@ -493,46 +496,13 @@
 				return true
 			}
 
-			/*
 			function generateTimer() {
-				timerInputs.forEach(function (input, index) {
-					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
-				})
-				// Create the span elements
-				var hoursSpan = document.createElement('span')
-				hoursSpan.setAttribute('id', 'hours')
-				hoursSpan.textContent = `${timerArray[0]}${timerArray[1]}`
-
-				var minutesSpan = document.createElement('span')
-				minutesSpan.setAttribute('id', 'minutes')
-				minutesSpan.textContent = `${timerArray[2]}${timerArray[3]}`
-
-				var secondsSpan = document.createElement('span')
-				secondsSpan.setAttribute('id', 'seconds')
-				secondsSpan.textContent = `${timerArray[4]}${timerArray[5]}`
-
-				// Get the parent element to which the spans will be appended
-				var parentElement = document.getElementById('output')
-
-				// Append the span elements to the parent element
-				parentElement.appendChild(hoursSpan)
-				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
-				parentElement.appendChild(minutesSpan)
-				parentElement.appendChild(document.createTextNode(':')) // Add colon between spans
-				parentElement.appendChild(secondsSpan)
-
-				activateControls()
-			}
-			*/
-
-			// /* Utility for generateTimer */
-			// function insertAfter(newNode, referenceNode) {
-			// 	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
-			// }
-
-			function generateTimer() {
-				var outputDiv = document.querySelector('.output')
-				var clonedDiv = outputDiv.cloneNode(true) // Passing true clones all child nodes as well
+				var timerTemplateDiv = document.getElementById(`timer-${activeTimerId}`)
+				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
+				console.log(activeTimerId)
+				activeTimerId = activeTimerId + 1
+				console.log(activeTimerId)
+				clonedDiv.id = `timer-${activeTimerId}`
 				var hoursSpan = clonedDiv.querySelector('.hours')
 				var minutesSpan = clonedDiv.querySelector('.minutes')
 				var secondsSpan = clonedDiv.querySelector('.seconds')
@@ -553,8 +523,9 @@
 				clonedDiv.style.visibility = 'visible'
 
 				//outputDiv.parentNode.insertBefore(clonedDiv, outputDiv)
-				outputDiv.insertAdjacentElement('afterend', clonedDiv)
+				timerTemplateDiv.insertAdjacentElement('afterend', clonedDiv)
 				// insertAfter(clonedDiv, outputDiv)
+				activateControls()
 			}
 
 			function activateControls() {
