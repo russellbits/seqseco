@@ -184,7 +184,7 @@
 			#addTimerBtn > img:hover {
 				cursor: pointer;
 			}
-			#output {
+			.output {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: nowrap;
@@ -198,12 +198,12 @@
 				border-bottom: 1px solid #979797;
 				visibility: hidden;
 			}
-			#output .timerName {
+			.output .timerName {
 				font:
 					18px 'IBM Plex Sans',
 					sans-serif;
 			}
-			#output > div > span > small {
+			.output > div > span > small {
 				/* tenths of a second */
 				font:
 					36px 'Din Alternate',
@@ -323,7 +323,7 @@
 				Timer template
 				Will be initially hidden via CSS.
 			-->
-			<div id="output">
+			<div id="0" class="output">
 				<div class="leftColumn">
 					<div>
 						<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds"
@@ -525,13 +525,13 @@
 			}
 			*/
 
-			/* Utility for generateTimer */
-			function insertAfter(newNode, referenceNode) {
-				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
-			}
+			// /* Utility for generateTimer */
+			// function insertAfter(newNode, referenceNode) {
+			// 	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling)
+			// }
 
 			function generateTimer() {
-				var outputDiv = document.getElementById('output')
+				var outputDiv = document.querySelector('.output')
 				var clonedDiv = outputDiv.cloneNode(true) // Passing true clones all child nodes as well
 				var hoursSpan = clonedDiv.querySelector('.hours')
 				var minutesSpan = clonedDiv.querySelector('.minutes')
@@ -553,7 +553,8 @@
 				clonedDiv.style.visibility = 'visible'
 
 				//outputDiv.parentNode.insertBefore(clonedDiv, outputDiv)
-				insertAfter(clonedDiv, outputDiv)
+				outputDiv.insertAdjacentElement('afterend', clonedDiv)
+				// insertAfter(clonedDiv, outputDiv)
 			}
 
 			function activateControls() {
