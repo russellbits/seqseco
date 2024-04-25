@@ -187,7 +187,7 @@
 				cursor: pointer;
 			}
 			.timer {
-				display: flex;
+				display: none;
 				flex-direction: row;
 				flex-wrap: nowrap;
 				justify-content: space-between;
@@ -198,7 +198,7 @@
 				padding-bottom: 12px;
 				margin: 0px 12px 12px 12px;
 				border-bottom: 1px solid #979797;
-				visibility: hidden;
+				visibility: collapse;
 				border: 1px solid green;
 			}
 			.timer .timerName {
@@ -505,18 +505,19 @@
 			}
 
 			function generateTimer() {
-				// change the background to main on generation of first timer
-				var mainElement = document.querySelector('main')
+				// Change the background to main on generation of first timer
+				if (lastCreatedTimerId === 0) {
+					var mainElement = document.querySelector('main')
+					mainElement.style.backgroundImage = `url('images/logo-faded.png')`
+				}
+
 				var timerTemplateDiv = document.getElementById(timers[0])
 				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
-				// console.log(lastCreatedTimerId)
 				lastCreatedTimerId = lastCreatedTimerId + 1
-				// console.log(lastCreatedTimerId)
 				let newTimerId = `timer-${lastCreatedTimerId}`
 				clonedDiv.id = newTimerId
 
-				console.log(timers)
-				console.log('Last generated timer:', timers[timers.length - 1])
+				// Fill in template
 				var hoursSpan = clonedDiv.querySelector('.hours')
 				var minutesSpan = clonedDiv.querySelector('.minutes')
 				var secondsSpan = clonedDiv.querySelector('.seconds')
@@ -537,14 +538,12 @@
 				minutesSpan.textContent = minutes
 				secondsSpan.textContent = seconds
 
-				// Set visibility to visible
+				// Styling updates
+				clonedDiv.style.display = 'flex'
 				clonedDiv.style.visibility = 'visible'
-				mainElement.style.backgroundImage = `url('images/logo-faded.png')`
 
-				//outputDiv.parentNode.insertBefore(clonedDiv, outputDiv)
 				lastGeneratedTimer.insertAdjacentElement('afterend', clonedDiv)
 				timers.push(newTimerId)
-				// insertAfter(clonedDiv, outputDiv)
 				activateControls()
 			}
 
@@ -556,9 +555,6 @@
 				if (index !== -1) {
 					timers.splice(index, 1)
 				}
-				// timers.pop(timerDiv.id-1)
-				console.log(timers)
-				// Remove the parent element from the DOM
 				timerDiv.remove()
 			}
 
