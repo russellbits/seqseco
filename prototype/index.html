@@ -2,7 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
+		/>
 		<link rel="icon" href="./favicon.icn" />
 		<title>Generic Web App Template</title>
 		<style>
@@ -36,7 +39,6 @@
 				color: white;
 				background-color: white;
 				display: flex;
-				height: 100vh;
 				padding: 0;
 				margin: 0;
 			}
@@ -45,8 +47,8 @@
 				display: flex;
 				flex-direction: column;
 				margin: auto;
-				width: 100vw;
-				height: 100vh;
+				width: 100dvw;
+				height: 100dvh;
 				background-color: white;
 			}
 			#app.nightmode {
@@ -75,33 +77,12 @@
 			}
 
 			#menu > div.controls {
+				display: flex;
+				flex-direction: row;
 				flex: 1;
 				width: 120px;
 				padding: 10px;
-				display: flex;
 				justify-content: space-between;
-				border: 1px solid purple;
-			}
-
-			/*#menu > div.right > div {
-				flex: 1;
-				padding: 0;
-				margin: 0 5px;
-			}*/
-
-			main {
-				display: flex;
-				flex-direction: column;
-				flex-grow: 2;
-				flex-wrap: nowrap;
-				justify-content: flex-end;
-				padding: 0;
-				margin: 0;
-				background-image: url('images/logo.png');
-				background-color: rgba(0, 0, 0, 0.5);
-				background-size: 334px 107px;
-				background-repeat: no-repeat;
-				background-position: center;
 			}
 
 			a.icon {
@@ -131,6 +112,7 @@
 			.icon.close {
 				background-image: url('images/icon-close.svg');
 			}
+
 			.timerControls {
 				display: flex;
 				flex-direction: row;
@@ -147,10 +129,25 @@
 				padding: 0;
 			}
 
+			main {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 2;
+				flex-wrap: nowrap;
+				justify-content: flex-end;
+				padding: 0;
+				margin: 0;
+				background-image: url('images/logo.png');
+				background-color: rgba(0, 0, 0, 0.5);
+				background-size: 334px 107px;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
 			#timerInput {
 				padding: 0;
 				margin: 0 12px;
-				border: 1px solid green;
+				max-width: 414px;
 			}
 
 			.form-row {
@@ -161,7 +158,7 @@
 				text-align: center;
 			}
 			.form-row input {
-				width: 40px;
+				max-width: 40px;
 				height: 70px;
 				margin: 4px;
 			}
@@ -232,6 +229,20 @@
 				/* CSS rules for screens between 400px and 900px */
 				#app {
 					background-color: black;
+					height: 100dvh;
+				}
+				.form-row input {
+					max-width: 40px;
+					height: 60px;
+					margin: 4px;
+				}
+				input[type='number'] {
+					font:
+						28px 'Din Alternate',
+						monospace;
+					border: 1px solid silver;
+					border-radius: 5px;
+					text-align: center;
 				}
 			}
 		</style>
@@ -412,10 +423,6 @@
 								alt="Add timer, inactive"
 							/>
 						</div>
-
-						<!--<button type="button" onclick="generateTimer()">Create Timer</button>
-					<button type="button" onclick="startTimer()">Start Timer</button>
-					<button type="button" onclick="stopTimer()">Stop Timer</button>-->
 					</form>
 				</div>
 
@@ -528,8 +535,8 @@
 				var secondsSpan = clonedDiv.querySelector('.seconds')
 				var timerNameSpan = clonedDiv.querySelector('.timerName')
 
-				console.log('Timers array length:', timers.length)
-				console.log('Last generated timer:', timers[timers.length - 1])
+				// console.log('Timers array length:', timers.length)
+				// console.log('Last generated timer:', timers[timers.length - 1])
 				var lastGeneratedTimer = document.getElementById(timers[timers.length - 1])
 
 				timerInputs.forEach(function (input, index) {
@@ -557,13 +564,13 @@
 			function deleteTimer() {
 				// Find the parent element of the button (which is the div with class "timer")
 				var timerDiv = event.target.closest('.timer')
-				console.log(`Deleting ${timerDiv.id}`)
+				// console.log(`Deleting ${timerDiv.id}`)
 				var index = timers.indexOf(timerDiv.id)
 				if (index !== -1) {
 					timers.splice(index, 1)
 				}
 				if (timers.length === 1) {
-					console.log('No timers, de-activating controls.')
+					// console.log('No timers, de-activating controls.')
 					deactivateControls()
 				}
 				timerDiv.remove()
@@ -642,7 +649,7 @@
 				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
 				// console.log(resultString) // or do something else with the result string
 				currentTimer = document.getElementById(timers[1])
-				console.log('Current timer is ', currentTimer)
+				// console.log('Current timer is ', currentTimer)
 
 				currentTimer.querySelector('.hours').innerText = `${timerArray[0]}${timerArray[1]}`
 				currentTimer.querySelector('.minutes').innerText = `${timerArray[2]}${timerArray[3]}`
@@ -651,7 +658,7 @@
 
 			// Function to stop the interval
 			function pauseTimer() {
-				console.log(`Pause activated for timer ${timers[timers.length - 1]}`)
+				// console.log(`Pause activated for timer ${timers[timers.length - 1]}`)
 				clearInterval(activeTimer)
 			}
 			/*
