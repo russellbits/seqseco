@@ -226,7 +226,12 @@
 
 			.fade-in {
 				opacity: 0; /* Start with opacity 0 */
-				transition: opacity 1s ease-in; /* Transition opacity over 1 second */
+				transition: opacity 0.5s ease-in;
+			}
+
+			.fade-out {
+				opacity: 0;
+				transition: opacity 0.5s ease-out;
 			}
 
 			/* Styles for screens between 400px and 900px */
@@ -554,7 +559,9 @@
 
 				// console.log('Timers array length:', timers.length)
 				console.log('New timer div:', timers[lastCreatedTimerId - 1].id)
-				var lastGeneratedTimerDiv = document.getElementById(timers[lastCreatedTimerId - 1].id)
+
+				var lastGeneratedTimerDiv = document.getElementById(timers[lastCreatedTimerId - 1].id) // should be template
+
 				console.log(lastGeneratedTimerDiv)
 
 				var hours = `${timers[lastCreatedTimerId].timer[0]}${timers[lastCreatedTimerId].timer[1]}`
@@ -623,24 +630,23 @@
 						clearInterval(activeTimer)
 					}
 
-					displayTimer()
+					displayTimer(timerArray)
 				}, 100) // Interval of tenths of a second (100 milliseconds)
 				console.log(activeTimer)
 			}
 
-			function displayTimer() {
+			function displayTimer(timerArray) {
 				// debugging
 				// var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
 				// console.log(resultString) // or do something else with the result string
-				currentTimer = document.getElementById(timers[1].id)
+
+				currentTimer = document.getElementById(timers[1].id) // first timer after the template
+				console.log(currentTimer)
 				// console.log('Current timer is ', currentTimer)
 
-				currentTimer.querySelector('.hours').innerText =
-					`${timers[1].timer[0]}${timers[1].timer[1]}`
-				currentTimer.querySelector('.minutes').innerText =
-					`${timers[1].timer[2]}${timers[1].timer[3]}`
-				currentTimer.querySelector('.seconds').innerText =
-					`${timers[1].timer[4]}${timers[1].timer[5]}`
+				currentTimer.querySelector('.hours').innerText = `${timerArray[0]}${timerArray[1]}`
+				currentTimer.querySelector('.minutes').innerText = `${timerArray[2]}${timerArray[3]}`
+				currentTimer.querySelector('.seconds').innerText = `${timerArray[4]}${timerArray[5]}`
 			}
 
 			function deleteTimer() {
@@ -648,29 +654,47 @@
 				var timerDiv = event.target.closest('.timer')
 				// console.log(`Deleting ${timerDiv.id}`)
 				// var index = timers.indexOf(timerDiv.id)
+				lastCreatedTimerId = lastCreatedTimerId - 1
 				var matchedTimer = timers.filter(function (obj) {
 					return obj.id === timerDiv.id
 				})
+
+				var index = timers.indexOf(matchedTimer[0])
+
+				console.log(matchedTimer)
+
 				if (matchedTimer !== -1) {
 					timers.splice(index, 1)
 				}
+
 				if (timers.length === 1) {
 					// console.log('No timers, de-activating controls.')
 					deactivateControls()
 				}
+
 				timerDiv.remove()
+				timerDiv.classList.remove('fade-in')
+				// timerDiv.classList.add('fade-out')
+				timerDiv.ontransitionend = function () {
+					timerDiv.remove()
+				}
+				// timerDiv.addEventListener('transitionend', function (event) {
+				// 	// Check if the transition property that ended is opacity
+				// 	if (event.propertyName === 'opacity') {
+				// 		// Remove the node from the DOM after the fade-out animation is complete
+				// 		timerDiv.remove()
+				// 	}
+				// })
 			}
 
 			function activateControls() {
 				startTimerButton.setAttribute('src', 'images/button-start.png')
 				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
-				// resetTimerButton.setAttribute('src', 'images/button-reset.png')
+				resetTimerButton.setAttribute('src', 'images/button-reset.png')
 
 				startTimerButton.addEventListener('click', startTimer)
 				pauseTimerButton.addEventListener('click', pauseTimer)
-				// resetTimerButton.addEventListener('click', () => {
-				// 	startTimer()
-				// })
+				resetTimerButton.addEventListener('click', resetTimer)
 			}
 
 			function deactivateControls() {
@@ -680,7 +704,7 @@
 
 				startTimerButton.removeEventListener('click', startTimer)
 				pauseTimerButton.removeEventListener('click', pauseTimer)
-				// resetTimerButton.removeEventListener('click')
+				resetTimerButton.removeEventListener('click', resetTimer)
 				mainElement.style.backgroundImage = `url('images/logo.png')`
 			}
 
@@ -688,6 +712,20 @@
 			function pauseTimer() {
 				// console.log(`Pause activated for timer ${timers[timers.length - 1]}`)
 				clearInterval(activeTimer)
+			}
+
+			function resetTimer() {
+				clearInterval(activeTimer)
+				currentTimer = document.getElementById(timers[1].id) // first timer after the template
+				console.log(
+					`${timers[1].timer[0]}${timers[1].timer[1]}:${timers[1].timer[2]}${timers[1].timer[3]}:${timers[1].timer[4]}${timers[1].timer[5]}`
+				)
+				currentTimer.querySelector('.hours').innerText =
+					`${timers[1].timer[0]}${timers[1].timer[1]}`
+				currentTimer.querySelector('.minutes').innerText =
+					`${timers[1].timer[2]}${timers[1].timer[3]}`
+				currentTimer.querySelector('.seconds').innerText =
+					`${timers[1].timer[4]}${timers[1].timer[5]}`
 			}
 			/*
 			const exerciseTimer = {
