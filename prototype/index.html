@@ -224,6 +224,11 @@
 				opacity: 0.75;
 			}
 
+			.fade-in {
+				opacity: 0; /* Start with opacity 0 */
+				transition: opacity 1s ease-in; /* Transition opacity over 1 second */
+			}
+
 			/* Styles for screens between 400px and 900px */
 			@media (min-width: 400px) and (max-width: 900px) {
 				/* CSS rules for screens between 400px and 900px */
@@ -565,9 +570,15 @@
 				// Styling updates
 				clonedDiv.style.display = 'flex'
 				clonedDiv.style.visibility = 'visible'
+				clonedDiv.classList.add('fade-in')
 
+				// Insert new timer after the last one (or the template)
 				lastGeneratedTimerDiv.insertAdjacentElement('afterend', clonedDiv)
 				// timers.push(newTimerId)
+				clonedDiv.offsetWidth // This line triggers reflow, forcing the browser to re-render
+
+				// After reflow, set opacity to 1 to start the fade-in effect
+				clonedDiv.style.opacity = 1
 			}
 
 			function startTimer() {
