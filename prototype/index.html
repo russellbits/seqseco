@@ -470,11 +470,12 @@
 			/*
 			 * Timer functions and controls
 			 * TODOs & Questions
-			 * What does the data structure for a set of timers look like? (for eventual storage in Supabase)
 			 * Setting needed: Insert pause between timers Y/N
 			 */
-			let timers = ['template']
-			let timerArray = [0, 0, 0, 0, 0, 0]
+			/* Create a state machine for the timers */
+			let timers = [{ id: 'template', name: 'Timer Template', timer: [0, 0, 0, 0, 0, 0] }]
+			//let timers = ['template']
+			// let timerArray = [0, 0, 0, 0, 0, 0]
 			let lastCreatedTimerId = 0
 			let activeTimerId = 0
 			let activeTimer
@@ -523,11 +524,22 @@
 					activateControls()
 				}
 
-				var timerTemplateDiv = document.getElementById(timers[0])
-				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
+				// Add timer to state and update
 				lastCreatedTimerId = lastCreatedTimerId + 1
 				let newTimerId = `timer-${lastCreatedTimerId}`
+				let newTimer = { id: newTimerId, name: 'Doo da', timer: [0, 0, 0, 0, 0, 0] }
+				timers.push(newTimer)
+				console.log(newTimer)
+
+				var timerTemplateDiv = document.getElementById(timers[0].id)
+				var clonedDiv = timerTemplateDiv.cloneNode(true) // Passing true clones all child nodes as well
+
 				clonedDiv.id = newTimerId
+
+				// From form to state
+				timerInputs.forEach(function (input, index) {
+					newTimer.timer[index] = input.value === '' ? 0 : parseInt(input.value)
+				})
 
 				// Fill in template
 				var hoursSpan = clonedDiv.querySelector('.hours')
@@ -536,17 +548,14 @@
 				var timerNameSpan = clonedDiv.querySelector('.timerName')
 
 				// console.log('Timers array length:', timers.length)
-				// console.log('Last generated timer:', timers[timers.length - 1])
-				var lastGeneratedTimer = document.getElementById(timers[timers.length - 1])
+				console.log('New timer div:', timers[lastCreatedTimerId - 1].id)
+				var lastGeneratedTimerDiv = document.getElementById(timers[lastCreatedTimerId - 1].id)
+				console.log(lastGeneratedTimerDiv)
 
-				timerInputs.forEach(function (input, index) {
-					timerArray[index] = input.value === '' ? 0 : parseInt(input.value)
-				})
-
-				var hours = `${timerArray[0]}${timerArray[1]}`
-				var minutes = `${timerArray[2]}${timerArray[3]}`
-				var seconds = `${timerArray[4]}${timerArray[5]}`
-				var timerName = `Doo daa`
+				var hours = `${timers[lastCreatedTimerId].timer[0]}${timers[lastCreatedTimerId].timer[1]}`
+				var minutes = `${timers[lastCreatedTimerId].timer[2]}${timers[lastCreatedTimerId].timer[3]}`
+				var seconds = `${timers[lastCreatedTimerId].timer[4]}${timers[lastCreatedTimerId].timer[5]}`
+				var timerName = timers[lastCreatedTimerId].name
 
 				hoursSpan.textContent = hours
 				minutesSpan.textContent = minutes
@@ -557,51 +566,14 @@
 				clonedDiv.style.display = 'flex'
 				clonedDiv.style.visibility = 'visible'
 
-				lastGeneratedTimer.insertAdjacentElement('afterend', clonedDiv)
-				timers.push(newTimerId)
-			}
-
-			function deleteTimer() {
-				// Find the parent element of the button (which is the div with class "timer")
-				var timerDiv = event.target.closest('.timer')
-				// console.log(`Deleting ${timerDiv.id}`)
-				var index = timers.indexOf(timerDiv.id)
-				if (index !== -1) {
-					timers.splice(index, 1)
-				}
-				if (timers.length === 1) {
-					// console.log('No timers, de-activating controls.')
-					deactivateControls()
-				}
-				timerDiv.remove()
-			}
-
-			function activateControls() {
-				startTimerButton.setAttribute('src', 'images/button-start.png')
-				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
-				// resetTimerButton.setAttribute('src', 'images/button-reset.png')
-
-				startTimerButton.addEventListener('click', startTimer)
-				pauseTimerButton.addEventListener('click', pauseTimer)
-				// resetTimerButton.addEventListener('click', () => {
-				// 	startTimer()
-				// })
-			}
-
-			function deactivateControls() {
-				startTimerButton.setAttribute('src', 'images/button-start-inactive.png')
-				pauseTimerButton.setAttribute('src', 'images/button-pause-inactive.png')
-				resetTimerButton.setAttribute('src', 'images/button-reset-inactive.png')
-
-				startTimerButton.removeEventListener('click', startTimer)
-				pauseTimerButton.removeEventListener('click', pauseTimer)
-				// resetTimerButton.removeEventListener('click')
-				mainElement.style.backgroundImage = `url('images/logo.png')`
+				lastGeneratedTimerDiv.insertAdjacentElement('afterend', clonedDiv)
+				// timers.push(newTimerId)
 			}
 
 			function startTimer() {
 				//console.log('Activating ', timerDivId)
 				activeTimer = setInterval(function () {
+					let timerArray = timers[timers.length - 1].timer
 					// Decrement the last element of the array (seconds)
 					timerArray[5]--
 
@@ -640,21 +612,65 @@
 						clearInterval(activeTimer)
 					}
 
-					displayTimer(timerArray)
+					displayTimer()
 				}, 100) // Interval of tenths of a second (100 milliseconds)
 				console.log(activeTimer)
 			}
 
-			function displayTimer(timerArray) {
+			function displayTimer() {
 				// debugging
-				var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
+				// var resultString = `${timerArray[0]}${timerArray[1]}:${timerArray[2]}${timerArray[3]}:${timerArray[4]}${timerArray[5]}`
 				// console.log(resultString) // or do something else with the result string
-				currentTimer = document.getElementById(timers[1])
+				currentTimer = document.getElementById(timers[1].id)
 				// console.log('Current timer is ', currentTimer)
 
-				currentTimer.querySelector('.hours').innerText = `${timerArray[0]}${timerArray[1]}`
-				currentTimer.querySelector('.minutes').innerText = `${timerArray[2]}${timerArray[3]}`
-				currentTimer.querySelector('.seconds').innerText = `${timerArray[4]}${timerArray[5]}`
+				currentTimer.querySelector('.hours').innerText =
+					`${timers[1].timer[0]}${timers[1].timer[1]}`
+				currentTimer.querySelector('.minutes').innerText =
+					`${timers[1].timer[2]}${timers[1].timer[3]}`
+				currentTimer.querySelector('.seconds').innerText =
+					`${timers[1].timer[4]}${timers[1].timer[5]}`
+			}
+
+			function deleteTimer() {
+				// Find the parent element of the button (which is the div with class "timer")
+				var timerDiv = event.target.closest('.timer')
+				// console.log(`Deleting ${timerDiv.id}`)
+				// var index = timers.indexOf(timerDiv.id)
+				var matchedTimer = timers.filter(function (obj) {
+					return obj.id === timerDiv.id
+				})
+				if (matchedTimer !== -1) {
+					timers.splice(index, 1)
+				}
+				if (timers.length === 1) {
+					// console.log('No timers, de-activating controls.')
+					deactivateControls()
+				}
+				timerDiv.remove()
+			}
+
+			function activateControls() {
+				startTimerButton.setAttribute('src', 'images/button-start.png')
+				pauseTimerButton.setAttribute('src', 'images/button-pause.png')
+				// resetTimerButton.setAttribute('src', 'images/button-reset.png')
+
+				startTimerButton.addEventListener('click', startTimer)
+				pauseTimerButton.addEventListener('click', pauseTimer)
+				// resetTimerButton.addEventListener('click', () => {
+				// 	startTimer()
+				// })
+			}
+
+			function deactivateControls() {
+				startTimerButton.setAttribute('src', 'images/button-start-inactive.png')
+				pauseTimerButton.setAttribute('src', 'images/button-pause-inactive.png')
+				resetTimerButton.setAttribute('src', 'images/button-reset-inactive.png')
+
+				startTimerButton.removeEventListener('click', startTimer)
+				pauseTimerButton.removeEventListener('click', pauseTimer)
+				// resetTimerButton.removeEventListener('click')
+				mainElement.style.backgroundImage = `url('images/logo.png')`
 			}
 
 			// Function to stop the interval
