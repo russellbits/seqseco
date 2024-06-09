@@ -1,3 +1,12 @@
-<h1>Sequence Timer</h1>
+<!-- +page.svelte -->
+<script>
+	import Menu from '$lib/components/Menu.svelte'
+</script>
 
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div id="app">
+	<Menu />
+
+	<h1>Sequence Timer</h1>
+
+	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a>Hello?</p>
+</div>
