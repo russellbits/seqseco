@@ -213,14 +213,15 @@
 				width: 80%;
 				height: 90%;
 				color: white;
-				background-color: rgba(0, 0, 0, 0.5);
+				background-color: rgba(0, 0, 0, 0.9);
 				border: 1px solid #7f7f7f;
 				border-radius: 20px;
 			}
 
 			::backdrop {
 				/* background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green); */
-				background-image: linear-gradient(45deg, #333, #aaa);
+				/* background-image: linear-gradient(45deg, #333, #aaa); */
+				background-color: black;
 				opacity: 0.75;
 			}
 
@@ -255,12 +256,84 @@
 					text-align: center;
 				}
 			}
+			/* Styles for portrait mode */
+			@media (orientation: portrait) {
+				#notice {
+					display: none;
+				}
+			}
+
+			/* Styles for landscape mode */
+			@media (orientation: landscape) {
+				body {
+					background-color: black;
+				}
+				#app {
+					display: none;
+				}
+				#notice {
+					display: flex;
+					flex-direction: column;
+					width: 100dvw;
+					height: 200px;
+					background-color: white;
+				}
+				#notice.nightmode {
+					background-color: black;
+				}
+				#notice div {
+					text-align: center;
+					max-height: 75px;
+					padding: 0;
+					margin: 0;
+				}
+				#notice .logo img {
+					transform: scale(0.6);
+				}
+
+				#notice .figure img {
+					transform: scale(0.6);
+				}
+
+				#notice h1 {
+					font-family: 'IBM Plex Sans', sans-serif;
+					font-size: 2rem;
+					padding: 0;
+				}
+				#notice p {
+					font-family: 'IBM Plex Serif', 'Trebuchet MS', serif;
+					font-size: 1.2rem;
+					text-align: left;
+					padding: 0 6dvw 0 6dvw;
+				}
+			}
 		</style>
 		<script>
 			// const dialog = document.querySelector('dialog')
 		</script>
 	</head>
 	<body>
+		<div id="notice" class="nightmode">
+			<div class="logo">
+				<img src="images/logo.png" width="265" height="102" alt="Seqseco Logo" />
+			</div>
+			<div class="figure">
+				<img
+					src="images/rotation-notice-graphic.png"
+					width="117"
+					height="108"
+					alt="Rotation notice graphic"
+				/>
+			</div>
+			<div><h1>Greetings</h1></div>
+			<div>
+				<p>
+					SEQSECO is specifically designed to be used in portrait mode instead of landscape. Please
+					rotate your phone to fully enjoy SEQSECO.
+				</p>
+			</div>
+		</div>
+
 		<div id="app" class="nightmode">
 			<div id="menu">
 				<div class="brand">
