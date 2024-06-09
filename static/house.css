@@ -1,0 +1,298 @@
+@font-face {
+	font-family: 'Montserrat Medium';
+	src:
+		url('fonts/montserrat-medium.woff2') format('woff2'),
+		url('fonts/montserrat-medium.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src:
+		url('fonts/montserrat.woff2') format('woff2'),
+		url('fonts/montserrat.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat Light';
+	src:
+		url('fonts/montserrat-light.woff2') format('woff2'),
+		url('fonts/montserrat-light.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body {
+	color: white;
+	background-color: white;
+	display: flex;
+	padding: 0;
+	margin: 0;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	width: 100dvw;
+	height: 100dvh;
+	background-color: white;
+}
+#app.nightmode {
+	background-color: rgb(32, 32, 32);
+}
+
+#menu {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	height: 42px;
+	background-color: rgba(131, 0, 198, 0.4);
+}
+
+#menu > div.brand {
+	flex: 2;
+	padding: 10px;
+}
+
+span.logo {
+	font-family: 'Montserrat Medium';
+	font-size: 18px;
+	color: white;
+	text-transform: uppercase;
+}
+
+#menu > div.controls {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	width: 120px;
+	padding: 10px;
+	justify-content: space-between;
+}
+
+a.icon {
+	display: block;
+	color: white;
+	width: 22px;
+	height: 22px;
+	background-size: cover;
+}
+
+.icon.info {
+	background-image: url('images/icon-information.svg');
+}
+
+.icon.settings {
+	background-image: url('images/icon-settings.svg');
+}
+
+.icon.github {
+	background-image: url('images/icon-github.svg');
+}
+
+.icon.linkedin {
+	background-image: url('images/icon-linkedin.svg');
+}
+
+.icon.close {
+	background-image: url('images/icon-close.svg');
+}
+
+.timerControls {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin: 12px;
+	padding: 0;
+}
+
+.timerControls > div {
+	display: block;
+	width: 78px;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	padding: 0;
+	margin: 0;
+	background-image: url('images/logo.png');
+	background-color: rgba(0, 0, 0, 0.5);
+	background-size: 264px 102px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#timerInput {
+	padding: 0;
+	margin: 0 12px;
+	max-width: 414px;
+}
+
+.form-row {
+	display: flex;
+	align-items: center;
+	font-size: 50px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+.form-row input {
+	max-width: 40px;
+	height: 70px;
+	margin: 4px;
+}
+input[type='number'] {
+	font:
+		50px 'Din Alternate',
+		monospace;
+	border: 1px solid silver;
+	border-radius: 5px;
+	text-align: center;
+}
+input[type='number'].no-arrows::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+#addTimerBtn {
+	margin: 0px 4px;
+}
+#addTimerBtn > img:hover {
+	cursor: pointer;
+}
+.timer {
+	/* initially the template */
+	display: none;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	color: white;
+	font:
+		50px 'Din Alternate',
+		monospace;
+	padding-bottom: 12px;
+	margin: 0px 12px 12px 12px;
+	border-bottom: 1px solid #979797;
+	visibility: collapse;
+}
+.timer .timerName {
+	font:
+		18px 'IBM Plex Sans',
+		sans-serif;
+}
+.timer > div > span > small {
+	/* tenths of a second */
+	font:
+		36px 'Din Alternate',
+		monospace;
+}
+
+dialog {
+	font-family: sans-serif;
+	width: 80%;
+	height: 90%;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.9);
+	border: 1px solid #7f7f7f;
+	border-radius: 20px;
+}
+
+::backdrop {
+	/* background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green); */
+	/* background-image: linear-gradient(45deg, #333, #aaa); */
+	background-color: black;
+	opacity: 0.75;
+}
+
+.fade-in {
+	opacity: 0; /* Start with opacity 0 */
+	transition: opacity 0.5s ease-in;
+}
+
+.fade-out {
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
+}
+
+/* Styles for screens between 400px and 900px */
+@media (min-width: 400px) and (max-width: 900px) {
+	/* CSS rules for screens between 400px and 900px */
+	#app {
+		background-color: black;
+		height: 100dvh;
+	}
+	.form-row input {
+		max-width: 40px;
+		height: 60px;
+		margin: 4px;
+	}
+	input[type='number'] {
+		font:
+			28px 'Din Alternate',
+			monospace;
+		border: 1px solid silver;
+		border-radius: 5px;
+		text-align: center;
+	}
+}
+/* Styles for portrait mode */
+@media (orientation: portrait) {
+	#notice {
+		display: none;
+	}
+}
+
+/* Styles for landscape mode */
+@media (orientation: landscape) {
+	body {
+		background-color: black;
+	}
+	#app {
+		display: none;
+	}
+	#notice {
+		display: flex;
+		flex-direction: column;
+		width: 100dvw;
+		height: 200px;
+		background-color: white;
+	}
+	#notice.nightmode {
+		background-color: black;
+	}
+	#notice div {
+		text-align: center;
+		max-height: 75px;
+		padding: 0;
+		margin: 0;
+	}
+	#notice .logo img {
+		transform: scale(0.6);
+	}
+
+	#notice .figure img {
+		transform: scale(0.6);
+	}
+
+	#notice h1 {
+		font-family: 'IBM Plex Sans', sans-serif;
+		font-size: 2rem;
+		padding: 0;
+	}
+	#notice p {
+		font-family: 'IBM Plex Serif', 'Trebuchet MS', serif;
+		font-size: 1.2rem;
+		text-align: left;
+		padding: 0 6dvw 0 6dvw;
+	}
+}
